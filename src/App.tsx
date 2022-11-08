@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Toolbar from "./components/Toolbar";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <div>
+    <Toolbar/>
+    <main>
+      {/* 左侧组件列表 */}
+      <section className="left">
+        <div>componentList</div>
+        <div>realTimeComponentList</div>
+      </section>
+      {/* 中间画布 */}
+      <section className="center">
+        <div className="content">
+          editor
+        </div>
+      </section>
+      {/* 右侧属性列表 */}
+      <section className="right">
+        <div>
+          <div>属性： xxx</div>
+          <div>动画： xxx</div>
+          <div>事件： xxx</div>
+        </div>
+      </section>
+    </main>
+  </div>
 }
 
 export default App;

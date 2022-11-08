@@ -1,0 +1,31 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+}
+
+.modal {
+  margin: 120px auto;
+  width: 400px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.content {
+  padding: 16px;
+}
+
+.closeBtn {
+  cursor: pointer;
+}
