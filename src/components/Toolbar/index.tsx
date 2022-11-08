@@ -1,5 +1,5 @@
 import { Button, Space } from 'antd';
-import './index.css';
+import './index.less';
 
 const Toolbar = function() {
     return <Space className="toolbar">
@@ -20,6 +20,10 @@ const Toolbar = function() {
             <input type="text" />
             <span>*</span>
             <input type="text" />
+        </div>
+        <div className="canvas-config">
+            <span>画布比例</span>
+            <input/> %
         </div>
     </Space>
 }

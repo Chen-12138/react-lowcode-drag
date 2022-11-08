@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import Toolbar from "./components/Toolbar";
-import "./App.css";
+import "./App.less";
+import ComponentList from "./components/ComponentList";
+import RealTimeComponentList from "./components/RealTimeComponentList";
+import { Tabs } from 'antd';
+import CanvasAttr from "./components/CanvasAttr";
 
 function App() {
-  return <div>
-    <Toolbar/>
+  return <div className="home">
+    <Toolbar />
     <main>
       {/* 左侧组件列表 */}
       <section className="left">
-        <div>componentList</div>
-        <div>realTimeComponentList</div>
+        <ComponentList />
+        <RealTimeComponentList />
       </section>
       {/* 中间画布 */}
       <section className="center">
@@ -19,11 +23,27 @@ function App() {
       </section>
       {/* 右侧属性列表 */}
       <section className="right">
-        <div>
-          <div>属性： xxx</div>
-          <div>动画： xxx</div>
-          <div>事件： xxx</div>
-        </div>
+        {/* <Tabs
+          defaultActiveKey="attr"
+          items={[
+            {
+              label: `属性`,
+              key: 'attr',
+              children: `Content of Tab Pane 1`,
+            },
+            {
+              label: `动画`,
+              key: 'animation',
+              children: `Content of Tab Pane 2`,
+            },
+            {
+              label: `事件`,
+              key: 'events',
+              children: `Content of Tab Pane 3`,
+            },
+          ]}
+        /> */}
+        <CanvasAttr />
       </section>
     </main>
   </div>
