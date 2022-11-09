@@ -5,6 +5,7 @@ import ComponentList from "./components/ComponentList";
 import RealTimeComponentList from "./components/RealTimeComponentList";
 import { Tabs } from 'antd';
 import CanvasAttr from "./components/CanvasAttr";
+import Editor from "./components/Editor";
 
 function App() {
   return <div className="home">
@@ -18,7 +19,7 @@ function App() {
       {/* 中间画布 */}
       <section className="center">
         <div className="content">
-          editor
+          <Editor />
         </div>
       </section>
       {/* 右侧属性列表 */}
