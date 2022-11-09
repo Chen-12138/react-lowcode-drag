@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { State } from "../../state/reducer";
 import ContextMenu from "./ContextMenu";
 import Grid from "./Grid";
 import './index.less';
 
 const Editor = function () {
 
+    const editorConfig = useSelector((state: State) => state.editor);
+
+    console.log(editorConfig);
     const editorRef = useRef<HTMLDivElement>(null);
     const [showContextMenu, setShowContextMenu] = useState(false);
     const [contextMenuPos, setContextMenuPos] = useState({
@@ -47,7 +52,11 @@ const Editor = function () {
     },[handleClick, handleContextMenu]);
 
     return (
-        <div className="editor" ref={editorRef}>
+        <div className="editor" ref={editorRef} style={{ 
+            ...editorConfig.canvasStyleData, 
+            width: editorConfig.canvasStyleData.width + 'px',
+            height: editorConfig.canvasStyleData.height + 'px'
+        }}>
             <Grid />
 
             {/* 右击菜单 */}
