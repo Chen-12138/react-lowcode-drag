@@ -1,17 +1,19 @@
-import './index.less';
+import styles from "./index.less";
 
-const ComponentList = function() {
-    return <div className="component-list">
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
-        <div className="component-item">test</div>
+const ComponentList = function () {
+  return (
+    <div className={styles["component-list"]}>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
+      <div className={styles["component-item"]}>test</div>
     </div>
-}
+  );
+};
 
 export default ComponentList;

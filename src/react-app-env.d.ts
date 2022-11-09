@@ -77,3 +77,11 @@ declare module '*.less' {
   const style: Style
   export default style
 }
+
+declare module '*.scss' {
+  interface Style {
+    [propName: string]: string
+  }
+  const style: Style
+  export default style
+}

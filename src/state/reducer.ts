@@ -1,11 +1,10 @@
 import { combineReducers } from "redux";
-import editor, { EditorState } from './reducers/editor';
+import editor, { EditorState } from "./reducers/editor";
 
 export interface State {
-    editor: EditorState
-};
+  editor: EditorState;
+}
 
 export default combineReducers({
-    editor
+  editor,
 });
-  

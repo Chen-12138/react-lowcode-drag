@@ -552,23 +552,35 @@ module.exports = function (webpackEnv) {
               use: getStyleLoaders(
                 {
                   importLoaders: 2,
-                  // modules: true, 使用模块方式访问样式
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
+                  modules: {
+                    mode: 'local',
+                    getLocalIdent: getCSSModuleLocalIdent,
+                  },
                 },
-                "less-loader"
+                'less-loader'
               ),
+              // Don't consider CSS imports dead code even if the
+              // containing package claims to have no side effects.
+              // Remove this when webpack adds a warning or an error for this.
+              // See https://github.com/webpack/webpack/issues/6571
               sideEffects: true,
             },
+            // Adds support for CSS Modules, but using SASS
+            // using the extension .module.scss or .module.sass
             {
               test: lessModuleRegex,
               use: getStyleLoaders(
                 {
                   importLoaders: 2,
-                  sourceMap: isEnvProduction && shouldUseSourceMap,
-                  // modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent,
+                  sourceMap: isEnvProduction
+                    ? shouldUseSourceMap
+                    : isEnvDevelopment,
+                    modules: true,
                 },
-                "less-loader"
+                'less-loader'
               ),
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
