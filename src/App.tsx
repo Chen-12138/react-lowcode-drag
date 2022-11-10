@@ -6,43 +6,51 @@ import { Tabs } from "antd";
 import CanvasAttr from "./components/CanvasAttr";
 import Editor from "./components/Editor";
 import { State } from "./state/reducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { cloneDeep } from "lodash";
 import componentList from "./custom-component/component-list";
-import { ActionTypes } from "./state/constants/actionTypes";
+import useAction from "./hook/useAction";
 
 function App() {
-  const editor = useSelector((state: State) => state.editor.editor);
-  const dispatch = useDispatch();
+  const editorConfig = useSelector((state: State) => state.editor);
+  const {
+    addComponent,
+    recordSnapShot,
+    setCurComponent,
+    setClickComponentStatus,
+  } = useAction();
 
   const handleDrop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
     const index = e.dataTransfer.getData("index");
-    const rectInfo = editor.getBoundingClientRect();
+    const rectInfo = editorConfig.editor.getBoundingClientRect();
     if (index) {
       const component = cloneDeep(componentList[index]);
       component.style.top = e.clientY - rectInfo.y;
       component.style.left = e.clientX - rectInfo.x;
       component.id = Math.random();
 
-      console.log(component);
-
-      dispatch({
-        type: ActionTypes.AddComponent,
-        payload: component,
-      });
-      dispatch({
-        type: ActionTypes.RecordSnapShot,
-        payload: component,
-      });
+      addComponent(component);
+      recordSnapShot(component);
     }
   };
 
   const handleDragOver = (e: any) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "copy";
+  };
+
+  const handleMouseUp = (e: any) => {
+    if (!editorConfig.isClickComponent) {
+      setCurComponent({ curComponent: null, curComponentIndex: null });
+    }
+  };
+
+  const handleMouseDown = (e: any) => {
+    e.stopPropagation();
+    setClickComponentStatus(false);
   };
 
   return (
@@ -60,6 +68,8 @@ function App() {
             className={styles.content}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
           >
             <Editor />
           </div>

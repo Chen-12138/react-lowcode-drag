@@ -10,9 +10,27 @@ export enum ActionTypes {
   AddComponent = "AddComponent",
   // 记录快照
   RecordSnapShot = "RecordSnapShot",
+  // 设置当前组件
+  SetCurComponent = "SetCurComponent",
+  // 设置为点击组件状态
+  SetClickComponentStatus = "SetClickComponentStatus",
+  // 设置包裹组件样式
+  SetWrapStyle = "SetWrapStyle",
+  // 设置componentData
+  SetComponentData = "SetComponentData",
+}
+
+export interface SetCurComponentPayload {
+  curComponent: ComponentListItem | null;
+  curComponentIndex: number | null;
 }
 
 export interface Action {
   type: ActionTypes;
-  payload: CanvasStyleData | ComponentListItem;
+  payload:
+    | CanvasStyleData
+    | ComponentListItem
+    | SetCurComponentPayload
+    | ComponentListItem[]
+    | boolean;
 }

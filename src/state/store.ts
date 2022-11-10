@@ -1,8 +1,8 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducer";
+import thunk from "redux-thunk"; //引入redux-thunk，用于支持异步action
+import logger from "redux-logger";
 
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = createStore(reducer, applyMiddleware(logger));
+
 export default store;

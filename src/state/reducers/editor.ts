@@ -1,5 +1,9 @@
 import { ComponentListItem } from "../../custom-component/component-list";
-import { Action, ActionTypes } from "../constants/actionTypes";
+import {
+  Action,
+  ActionTypes,
+  SetCurComponentPayload,
+} from "../constants/actionTypes";
 
 export interface CanvasStyleData {
   width: number;
@@ -21,15 +25,15 @@ export interface EditorState {
   // 是否在编辑器中，用于判断复制、粘贴组件时是否生效，如果在编辑器外，则无视这些操作
   isInEdiotr: boolean;
   // 画布组件数据
-  componentData: any[];
-  curComponent: any;
-  curComponentIndex: number | any;
+  componentData: ComponentListItem[];
+  curComponent: ComponentListItem | null;
+  curComponentIndex: number | null;
   // 点击画布时是否点中组件，主要用于取消选中组件用。
   // 如果没点中组件，并且在画布空白处弹起鼠标，则取消当前组件的选中状态
   isClickComponent: boolean;
 }
 
-export const initialState: EditorState = {
+export const editorInitialState: EditorState = {
   editor: null,
   editMode: "edit",
   canvasStyleData: {
@@ -48,7 +52,10 @@ export const initialState: EditorState = {
   isClickComponent: false,
 };
 
-const editorReducer = (state: EditorState = initialState, action: Action) => {
+const editorReducer = (
+  state: EditorState = editorInitialState,
+  action: Action
+) => {
   switch (action.type) {
     case ActionTypes.SetEditor: {
       return {
@@ -69,10 +76,52 @@ const editorReducer = (state: EditorState = initialState, action: Action) => {
     }
 
     case ActionTypes.AddComponent: {
-      const payload = action.payload as ComponentListItem;
-      state.componentData.push(payload);
+      const component = action.payload as ComponentListItem;
+      state.componentData.push(component);
       return {
         ...state,
+      };
+    }
+
+    case ActionTypes.SetCurComponent: {
+      const { curComponent, curComponentIndex } =
+        action.payload as SetCurComponentPayload;
+      return {
+        ...state,
+        curComponent,
+        curComponentIndex,
+      };
+    }
+
+    case ActionTypes.SetWrapStyle: {
+      const curComponent = state.curComponent;
+      const { top, left, width, height, rotate } = action.payload as any;
+      if (curComponent) {
+        if (top) curComponent.style.top = Math.round(top);
+        if (left) curComponent.style.left = Math.round(left);
+        if (width) curComponent.style.width = Math.round(width);
+        if (height) curComponent.style.height = Math.round(height);
+        if (rotate) curComponent.style.rotate = Math.round(rotate);
+      }
+
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.SetClickComponentStatus: {
+      const status = action.payload as boolean;
+      return {
+        ...state,
+        isClickComponent: status,
+      };
+    }
+
+    case ActionTypes.SetComponentData: {
+      const componentData = action.payload as ComponentListItem[];
+      return {
+        ...state,
+        componentData: componentData,
       };
     }
 

@@ -7,10 +7,13 @@ import Grid from "./Grid";
 import ComponentWrap from "./ComponentWrap";
 import Text from "../../custom-component/Text";
 import styles from "./index.less";
+import { ComponentListItem } from "../../custom-component/component-list";
+import { getComponentWrapStyle } from "../../utils/style";
+import useAction from "../../hook/useAction";
 
 const Editor = function () {
   const editorConfig = useSelector((state: State) => state.editor);
-  const dispatch = useDispatch();
+  const { setEditor } = useAction();
   const editorRef = useRef<HTMLDivElement>(null);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [contextMenuPos, setContextMenuPos] = useState({
@@ -54,10 +57,7 @@ const Editor = function () {
 
   // 因为其他页面也需要获取到Editor，所以直接把他放到redux里吧
   useEffect(() => {
-    dispatch({
-      type: ActionTypes.SetEditor,
-      payload: editorRef.current,
-    });
+    setEditor(editorRef.current);
   }, [editorRef.current]);
 
   return (
@@ -73,11 +73,18 @@ const Editor = function () {
       {/* 网格 */}
       <Grid />
 
-      {editorConfig.componentData.map((item) => {
+      {editorConfig.componentData.map((item, index) => {
         return (
           <ComponentWrap
             key={item.id}
-            style={{ top: item.style.top, left: item.style.left }}
+            defaultStyle={item.style}
+            style={getComponentWrapStyle(item.style)}
+            active={
+              item.id ===
+              (editorConfig.curComponent || ({} as ComponentListItem)).id
+            }
+            element={item}
+            index={index}
           >
             <Text />
           </ComponentWrap>
