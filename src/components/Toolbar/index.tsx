@@ -1,5 +1,4 @@
 import { Button, InputNumber, Space } from "antd";
-import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionTypes } from "../../state/constants/actionTypes";
 import { State } from "../../state/reducer";
@@ -12,7 +11,6 @@ const Toolbar = function () {
   const dispatch = useDispatch();
 
   const handleChange = function (type: string, val: number | null) {
-    console.log(val);
     dispatch({
       type: ActionTypes.SetCanvasStyleData,
       payload: {

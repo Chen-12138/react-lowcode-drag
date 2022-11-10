@@ -1,3 +1,4 @@
+import { ComponentListItem } from "../../custom-component/component-list";
 import { Action, ActionTypes } from "../constants/actionTypes";
 
 export interface CanvasStyleData {
@@ -11,6 +12,8 @@ export interface CanvasStyleData {
 }
 
 export interface EditorState {
+  // 编辑器的ref
+  editor: any;
   // 编辑器模式 edit preview
   editMode: "edit" | "preview";
   // 页面全局数据
@@ -27,6 +30,7 @@ export interface EditorState {
 }
 
 export const initialState: EditorState = {
+  editor: null,
   editMode: "edit",
   canvasStyleData: {
     width: 1280,
@@ -44,8 +48,15 @@ export const initialState: EditorState = {
   isClickComponent: false,
 };
 
-export default (state: EditorState = initialState, action: Action) => {
+const editorReducer = (state: EditorState = initialState, action: Action) => {
   switch (action.type) {
+    case ActionTypes.SetEditor: {
+      return {
+        ...state,
+        editor: action.payload,
+      };
+    }
+
     case ActionTypes.SetCanvasStyleData: {
       const payload = action.payload as CanvasStyleData;
       return {
@@ -57,7 +68,17 @@ export default (state: EditorState = initialState, action: Action) => {
       };
     }
 
+    case ActionTypes.AddComponent: {
+      const payload = action.payload as ComponentListItem;
+      state.componentData.push(payload);
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }
 };
+
+export default editorReducer;

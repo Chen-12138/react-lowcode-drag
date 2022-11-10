@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.min.css";
 import { Provider } from "react-redux";
 import store from "./state/store";
+import "./asset/iconfont/iconfont.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

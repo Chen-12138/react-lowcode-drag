@@ -1,0 +1,44 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4315716",
+      "name": "文本",
+      "font_class": "wenben",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "4354249",
+      "name": "形状-矩形",
+      "font_class": "xingzhuang-juxing",
+      "unicode": "eb97",
+      "unicode_decimal": 60311
+    },
+    {
+      "icon_id": "6049692",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "17544289",
+      "name": "按钮",
+      "font_class": "anniu",
+      "unicode": "e6fc",
+      "unicode_decimal": 59132
+    },
+    {
+      "icon_id": "18175740",
+      "name": "圆形",
+      "font_class": "radio-on",
+      "unicode": "ea6a",
+      "unicode_decimal": 60010
+    }
+  ]
+}

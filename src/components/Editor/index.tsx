@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { ActionTypes } from "../../state/constants/actionTypes";
 import { State } from "../../state/reducer";
 import ContextMenu from "./ContextMenu";
 import Grid from "./Grid";
+import ComponentWrap from "./ComponentWrap";
+import Text from "../../custom-component/Text";
 import styles from "./index.less";
 
 const Editor = function () {
   const editorConfig = useSelector((state: State) => state.editor);
-
-  console.log(editorConfig);
+  const dispatch = useDispatch();
   const editorRef = useRef<HTMLDivElement>(null);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [contextMenuPos, setContextMenuPos] = useState({
@@ -50,6 +52,14 @@ const Editor = function () {
     };
   }, [handleClick, handleContextMenu]);
 
+  // 因为其他页面也需要获取到Editor，所以直接把他放到redux里吧
+  useEffect(() => {
+    dispatch({
+      type: ActionTypes.SetEditor,
+      payload: editorRef.current,
+    });
+  }, [editorRef.current]);
+
   return (
     <div
       className={styles.editor}
@@ -60,7 +70,19 @@ const Editor = function () {
         height: editorConfig.canvasStyleData.height + "px",
       }}
     >
+      {/* 网格 */}
       <Grid />
+
+      {editorConfig.componentData.map((item) => {
+        return (
+          <ComponentWrap
+            key={item.id}
+            style={{ top: item.style.top, left: item.style.left }}
+          >
+            <Text />
+          </ComponentWrap>
+        );
+      })}
 
       {/* 右击菜单 */}
       {showContextMenu ? <ContextMenu contextMenuPos={contextMenuPos} /> : null}
