@@ -11,7 +11,7 @@ export interface CanvasStyleData {
   scale: number;
   color: string;
   opacity: number;
-  background: string;
+  backgroundColor: string;
   fontSize: number;
 }
 
@@ -40,9 +40,9 @@ export const editorInitialState: EditorState = {
     width: 1280,
     height: 720,
     scale: 100,
-    color: "#000",
+    color: "#000000",
     opacity: 1,
-    background: "#fff",
+    backgroundColor: "#ffffff",
     fontSize: 14,
   },
   isInEdiotr: false,
