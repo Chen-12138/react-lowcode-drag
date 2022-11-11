@@ -10,6 +10,8 @@ import styles from "./index.less";
 import { ComponentListItem } from "../../custom-component/component-list";
 import { getComponentWrapStyle } from "../../utils/style";
 import useAction from "../../hook/useAction";
+import Button from "../../custom-component/Button";
+import Rect from "../../custom-component/Rect";
 
 const Editor = function () {
   const editorConfig = useSelector((state: State) => state.editor);
@@ -60,6 +62,26 @@ const Editor = function () {
     setEditor(editorRef.current);
   }, [editorRef.current]);
 
+  const getComponent = (type: string) => {
+    switch (type) {
+      case "Text": {
+        return <Text />;
+      }
+
+      case "Button": {
+        return <Button />;
+      }
+
+      case "Rect": {
+        return <Rect />;
+      }
+
+      default: {
+        return <Text />;
+      }
+    }
+  };
+
   return (
     <div
       className={styles.editor}
@@ -86,7 +108,7 @@ const Editor = function () {
             element={item}
             index={index}
           >
-            <Text />
+            {getComponent(item.component)}
           </ComponentWrap>
         );
       })}

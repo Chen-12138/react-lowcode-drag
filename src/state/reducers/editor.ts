@@ -42,7 +42,7 @@ export const editorInitialState: EditorState = {
     scale: 100,
     color: "#000000",
     opacity: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#4A90E2",
     fontSize: 14,
   },
   isInEdiotr: false,

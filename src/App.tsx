@@ -10,6 +10,9 @@ import { useSelector } from "react-redux";
 import { cloneDeep } from "lodash";
 import componentList from "./custom-component/component-list";
 import useAction from "./hook/useAction";
+import TextAttr from "./custom-component/Text/TextAttr";
+import ButtonAttr from "./custom-component/Button/ButtonAttr";
+import RectAttr from "./custom-component/Rect/RectAttr";
 
 function App() {
   const editorConfig = useSelector((state: State) => state.editor);
@@ -53,6 +56,22 @@ function App() {
     setClickComponentStatus(false);
   };
 
+  const getAttrComponent = (type: string) => {
+    switch (type) {
+      case "Text": {
+        return <TextAttr />;
+      }
+
+      case "Button": {
+        return <ButtonAttr />;
+      }
+
+      case "Rect": {
+        return <RectAttr />;
+      }
+    }
+  };
+
   return (
     <div className={styles.home}>
       <Toolbar />
@@ -76,27 +95,32 @@ function App() {
         </section>
         {/* 右侧属性列表 */}
         <section className={styles.right}>
-          {/* <Tabs
-          defaultActiveKey="attr"
-          items={[
-            {
-              label: `属性`,
-              key: 'attr',
-              children: `Content of Tab Pane 1`,
-            },
-            {
-              label: `动画`,
-              key: 'animation',
-              children: `Content of Tab Pane 2`,
-            },
-            {
-              label: `事件`,
-              key: 'events',
-              children: `Content of Tab Pane 3`,
-            },
-          ]}
-        /> */}
-          <CanvasAttr />
+          {editorConfig.curComponent ? (
+            <Tabs
+              defaultActiveKey="attr"
+              items={[
+                {
+                  label: `属性`,
+                  key: "attr",
+                  children: getAttrComponent(
+                    editorConfig.curComponent.component
+                  ),
+                },
+                {
+                  label: `动画`,
+                  key: "animation",
+                  children: `Content of Tab Pane 2`,
+                },
+                {
+                  label: `事件`,
+                  key: "events",
+                  children: `Content of Tab Pane 3`,
+                },
+              ]}
+            />
+          ) : (
+            <CanvasAttr />
+          )}
         </section>
       </main>
     </div>
