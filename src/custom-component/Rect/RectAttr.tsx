@@ -1,5 +1,12 @@
+import CommonAttr from "../common/CommonAttr";
+
 const RectAttr = () => {
-  return <div>RectAttr</div>;
+  return (
+    <div>
+      <h1>RectAttr</h1>
+      <CommonAttr />
+    </div>
+  );
 };
 
 export default RectAttr;

@@ -1,9 +1,12 @@
+import { CSSProperties } from "react";
 import styles from "./index.less";
 
-interface RectProps {}
+interface RectProps {
+  style: CSSProperties;
+}
 
-const Text: React.FC<RectProps> = function () {
-  return <div className={styles.rect}>Rect</div>;
+const Rect: React.FC<RectProps> = function ({ style }) {
+  return <div className={styles.rect} style={style}></div>;
 };
 
-export default Text;
+export default Rect;

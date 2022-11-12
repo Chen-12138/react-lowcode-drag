@@ -13,6 +13,7 @@ import useAction from "./hook/useAction";
 import TextAttr from "./custom-component/Text/TextAttr";
 import ButtonAttr from "./custom-component/Button/ButtonAttr";
 import RectAttr from "./custom-component/Rect/RectAttr";
+import CircleAttr from "./custom-component/Circle/CircleAttr";
 
 function App() {
   const editorConfig = useSelector((state: State) => state.editor);
@@ -69,6 +70,10 @@ function App() {
       case "Rect": {
         return <RectAttr />;
       }
+
+      case "Circle": {
+        return <CircleAttr />;
+      }
     }
   };
 
@@ -102,8 +107,10 @@ function App() {
                 {
                   label: `属性`,
                   key: "attr",
-                  children: getAttrComponent(
-                    editorConfig.curComponent.component
+                  children: (
+                    <div className={styles["attr-list"]}>
+                      {getAttrComponent(editorConfig.curComponent.component)}
+                    </div>
                   ),
                 },
                 {

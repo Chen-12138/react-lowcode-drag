@@ -8,10 +8,11 @@ import ComponentWrap from "./ComponentWrap";
 import Text from "../../custom-component/Text";
 import styles from "./index.less";
 import { ComponentListItem } from "../../custom-component/component-list";
-import { getComponentWrapStyle } from "../../utils/style";
+import { getComponentWrapStyle, getStyle } from "../../utils/style";
 import useAction from "../../hook/useAction";
 import Button from "../../custom-component/Button";
 import Rect from "../../custom-component/Rect";
+import Circle from "../../custom-component/Circle";
 
 const Editor = function () {
   const editorConfig = useSelector((state: State) => state.editor);
@@ -62,8 +63,8 @@ const Editor = function () {
     setEditor(editorRef.current);
   }, [editorRef.current]);
 
-  const getComponent = (type: string) => {
-    switch (type) {
+  const getComponent = (item: ComponentListItem) => {
+    switch (item.component) {
       case "Text": {
         return <Text />;
       }
@@ -73,7 +74,11 @@ const Editor = function () {
       }
 
       case "Rect": {
-        return <Rect />;
+        return <Rect style={getStyle(item.style)} />;
+      }
+
+      case "Circle": {
+        return <Circle style={getStyle(item.style)} />;
       }
 
       default: {
@@ -108,7 +113,7 @@ const Editor = function () {
             element={item}
             index={index}
           >
-            {getComponent(item.component)}
+            {getComponent(item)}
           </ComponentWrap>
         );
       })}

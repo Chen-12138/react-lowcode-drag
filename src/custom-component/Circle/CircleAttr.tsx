@@ -1,12 +1,12 @@
 import CommonAttr from "../common/CommonAttr";
 
-const ButtonAttr = () => {
+const CircleAttr = () => {
   return (
     <div>
-      <h1>ButtonAttr</h1>
+      <h1>CircleAttr</h1>
       <CommonAttr />
     </div>
   );
 };
 
-export default ButtonAttr;
+export default CircleAttr;

@@ -41,10 +41,6 @@ const SketchColor: React.FC<SketchColorPorps> = ({ value, onChange }) => {
     onChange?.(color.hex);
   };
 
-  console.log(
-    `rgba(${colorData.r}, ${colorData.g}, ${colorData.b}, ${colorData.a})`
-  );
-
   const styles = reactCSS({
     default: {
       color: {
