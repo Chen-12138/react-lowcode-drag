@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { ActionTypes } from "../../state/constants/actionTypes";
+import { useSelector } from "react-redux";
 import { State } from "../../state/reducer";
 import ContextMenu from "./ContextMenu";
 import Grid from "./Grid";
@@ -15,7 +14,9 @@ import Rect from "../../custom-component/Rect";
 import Circle from "../../custom-component/Circle";
 
 const Editor = function () {
-  const editorConfig = useSelector((state: State) => state.editor);
+  const { canvasStyleData, componentData, curComponent } = useSelector(
+    (state: State) => state.editor
+  );
   const { setEditor } = useAction();
   const editorRef = useRef<HTMLDivElement>(null);
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -44,24 +45,31 @@ const Editor = function () {
 
   // 点击事件
   const handleClick = useCallback((e: { [x: string]: any }) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (e.button !== 2) {
-      setShowContextMenu(false);
+      if (showContextMenu === true) {
+        setShowContextMenu(false);
+      }
     }
   }, []);
 
   useEffect(() => {
-    editorRef.current?.addEventListener("contextmenu", handleContextMenu);
-    editorRef.current?.addEventListener("click", handleClick);
+    if (editorRef.current) {
+      editorRef.current.addEventListener("contextmenu", handleContextMenu);
+      editorRef.current.addEventListener("click", handleClick);
+    }
     return () => {
       editorRef.current?.removeEventListener("contextmenu", handleContextMenu);
       editorRef.current?.removeEventListener("click", handleClick);
     };
-  }, [handleClick, handleContextMenu]);
+  }, [handleClick, handleContextMenu, editorRef.current]);
 
   // 因为其他页面也需要获取到Editor，所以直接把他放到redux里吧
   useEffect(() => {
     setEditor(editorRef.current);
-  }, [editorRef.current]);
+  }, []);
 
   const getComponent = (item: ComponentListItem) => {
     switch (item.component) {
@@ -92,24 +100,21 @@ const Editor = function () {
       className={styles.editor}
       ref={editorRef}
       style={{
-        ...editorConfig.canvasStyleData,
-        width: editorConfig.canvasStyleData.width + "px",
-        height: editorConfig.canvasStyleData.height + "px",
+        ...canvasStyleData,
+        width: canvasStyleData.width + "px",
+        height: canvasStyleData.height + "px",
       }}
     >
       {/* 网格 */}
       <Grid />
 
-      {editorConfig.componentData.map((item, index) => {
+      {componentData.map((item, index) => {
         return (
           <ComponentWrap
             key={item.id}
             defaultStyle={item.style}
             style={getComponentWrapStyle(item.style)}
-            active={
-              item.id ===
-              (editorConfig.curComponent || ({} as ComponentListItem)).id
-            }
+            active={item.id === (curComponent || ({} as ComponentListItem)).id}
             element={item}
             index={index}
           >

@@ -18,6 +18,8 @@ export enum ActionTypes {
   SetWrapStyle = "SetWrapStyle",
   // 设置componentData
   SetComponentData = "SetComponentData",
+  // 设置组件样式
+  SetComponentStyle = "SetComponentStyle",
 }
 
 export interface SetCurComponentPayload {

@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { useDispatch } from "react-redux";
 import { ComponentListItem } from "../custom-component/component-list";
 import {
@@ -64,6 +65,13 @@ export default function useAction() {
       dispatch({
         type: ActionTypes.SetComponentData,
         payload: componentData,
+      });
+    },
+
+    setComponentStyle(style: CSSProperties) {
+      dispatch({
+        type: ActionTypes.SetComponentStyle,
+        payload: style,
       });
     },
   };

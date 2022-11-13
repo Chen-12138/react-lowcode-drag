@@ -21,7 +21,7 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
   defaultStyle,
   style,
 }) => {
-  const { setCurComponent, setWrapStyle, setClickComponentStatus } =
+  const { setCurComponent, setComponentStyle, setClickComponentStatus } =
     useAction();
 
   const getPointStyle = (point: string) => {
@@ -65,6 +65,7 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
   };
 
   const handleMouseDown = (e: any) => {
+    e.preventDefault();
     e.stopPropagation();
 
     setClickComponentStatus(true);
@@ -77,13 +78,15 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
     const startTop = Number(pos.top);
     const startLeft = Number(pos.left);
 
-    const move = (moveEvent: { clientX: any; clientY: any }) => {
+    const move = (moveEvent: any) => {
+      moveEvent.stopPropagation();
+
       const curX = moveEvent.clientX;
       const curY = moveEvent.clientY;
       pos.top = curY - startY + startTop;
       pos.left = curX - startX + startLeft;
 
-      setWrapStyle(pos);
+      setComponentStyle(pos);
     };
 
     const up = () => {

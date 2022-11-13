@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { ComponentListItem } from "../../custom-component/component-list";
 import {
   Action,
@@ -106,6 +107,7 @@ const editorReducer = (
 
       return {
         ...state,
+        curComponent,
       };
     }
 
@@ -122,6 +124,20 @@ const editorReducer = (
       return {
         ...state,
         componentData: componentData,
+      };
+    }
+
+    case ActionTypes.SetComponentStyle: {
+      const curComponent = state.curComponent || { style: {} };
+      const style = action.payload as CSSProperties;
+      curComponent.style = {
+        ...curComponent.style,
+        ...style,
+      };
+
+      return {
+        ...state,
+        curComponent,
       };
     }
 

@@ -1,4 +1,9 @@
-export const styleData = [
+export interface styleFormItem {
+  key: string;
+  label: string;
+}
+
+export const styleData: styleFormItem[] = [
   { key: "left", label: "x 坐标" },
   { key: "top", label: "y 坐标" },
   { key: "rotate", label: "旋转角度" },

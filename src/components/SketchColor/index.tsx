@@ -9,6 +9,14 @@ interface SketchColorPorps {
 }
 
 const hexToRgba = (hex: string = "") => {
+  // 处理#fff缩写的情况
+  if (hex.length === 4) {
+    let arr = [];
+    let t = hex.slice(1);
+    arr = t.split("");
+    hex = "#" + arr.map((item) => item + item).join("");
+  }
+
   return {
     r: parseInt("0x" + hex.slice(1, 3)),
     g: parseInt("0x" + hex.slice(3, 5)),
@@ -22,6 +30,7 @@ const SketchColor: React.FC<SketchColorPorps> = ({ value, onChange }) => {
   const [colorData, setColorData] = useState({} as RGBColor);
 
   useEffect(() => {
+    console.log(value);
     setColorData(hexToRgba(value));
   }, [value]);
 
@@ -86,4 +95,4 @@ const SketchColor: React.FC<SketchColorPorps> = ({ value, onChange }) => {
   );
 };
 
-export default SketchColor;
+export default React.memo(SketchColor);
