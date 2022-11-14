@@ -27,6 +27,27 @@
       "unicode_decimal": 58910
     },
     {
+      "icon_id": "7036704",
+      "name": "下移",
+      "font_class": "xiayi",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "7036706",
+      "name": "上移",
+      "font_class": "shangyi",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "11372693",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e8b6",
+      "unicode_decimal": 59574
+    },
+    {
       "icon_id": "17544289",
       "name": "按钮",
       "font_class": "anniu",

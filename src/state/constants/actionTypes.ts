@@ -20,6 +20,10 @@ export enum ActionTypes {
   SetComponentData = "SetComponentData",
   // 设置组件样式
   SetComponentStyle = "SetComponentStyle",
+  // 删除组件
+  DeleteComponent = "DeleteComponent",
+  // 上移组件
+  UpComponent = "UpComponent",
 }
 
 export interface SetCurComponentPayload {
@@ -34,5 +38,6 @@ export interface Action {
     | ComponentListItem
     | SetCurComponentPayload
     | ComponentListItem[]
-    | boolean;
+    | boolean
+    | number;
 }

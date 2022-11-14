@@ -1,4 +1,3 @@
-// Copyright 2021 zhaoarden
 import React, { useEffect, useState } from "react";
 import reactCSS from "reactcss";
 import { RGBColor, SketchPicker } from "react-color";

@@ -74,5 +74,12 @@ export default function useAction() {
         payload: style,
       });
     },
+
+    deleteComponent(index: number) {
+      dispatch({
+        type: ActionTypes.DeleteComponent,
+        payload: index,
+      });
+    },
   };
 }

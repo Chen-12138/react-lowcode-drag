@@ -141,6 +141,14 @@ const editorReducer = (
       };
     }
 
+    case ActionTypes.DeleteComponent: {
+      const index = action.payload as number;
+      state.componentData.splice(index, 1);
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }
