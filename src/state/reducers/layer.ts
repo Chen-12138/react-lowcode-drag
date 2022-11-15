@@ -14,7 +14,6 @@ const layerReducer = (
 ) => {
   switch (action.type) {
     case ActionTypes.UpComponent: {
-      console.log(state);
       const { componentData, curComponentIndex } = state;
       if (curComponentIndex) {
         // 上移图层 index，表示元素在数组中越往后

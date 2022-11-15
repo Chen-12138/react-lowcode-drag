@@ -1,9 +1,16 @@
+import { CSSProperties } from "react";
 import styles from "./index.less";
 
-interface TextProps {}
+interface TextProps {
+  style: CSSProperties;
+}
 
-const Text: React.FC<TextProps> = function () {
-  return <div className={`${styles.text}`}>123</div>;
+const Text: React.FC<TextProps> = function ({ style }) {
+  return (
+    <div className={`${styles.text}`} style={style}>
+      123
+    </div>
+  );
 };
 
 export default Text;

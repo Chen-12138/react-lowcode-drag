@@ -81,5 +81,24 @@ export default function useAction() {
         payload: index,
       });
     },
+
+    upComponent() {
+      dispatch({
+        type: ActionTypes.UpComponent,
+      });
+    },
+
+    downComponent() {
+      dispatch({
+        type: ActionTypes.DownComponent,
+      });
+    },
+
+    updateComponentPropValue(propValue: string) {
+      dispatch({
+        type: ActionTypes.UpdateComponentPropValue,
+        payload: propValue,
+      });
+    },
   };
 }

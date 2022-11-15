@@ -12,6 +12,7 @@ import useAction from "../../hook/useAction";
 import Button from "../../custom-component/Button";
 import Rect from "../../custom-component/Rect";
 import Circle from "../../custom-component/Circle";
+import Image from "../../custom-component/Image";
 
 const Editor = function () {
   const { canvasStyleData, componentData, curComponent } = useSelector(
@@ -74,11 +75,11 @@ const Editor = function () {
   const getComponent = (item: ComponentListItem) => {
     switch (item.component) {
       case "Text": {
-        return <Text />;
+        return <Text style={getStyle(item.style)} />;
       }
 
       case "Button": {
-        return <Button />;
+        return <Button style={getStyle(item.style)} />;
       }
 
       case "Rect": {
@@ -89,8 +90,12 @@ const Editor = function () {
         return <Circle style={getStyle(item.style)} />;
       }
 
+      case "Image": {
+        return <Image propValue={item.propValue} />;
+      }
+
       default: {
-        return <Text />;
+        return <Text style={getStyle(item.style)} />;
       }
     }
   };

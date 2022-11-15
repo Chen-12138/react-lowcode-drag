@@ -24,6 +24,10 @@ export enum ActionTypes {
   DeleteComponent = "DeleteComponent",
   // 上移组件
   UpComponent = "UpComponent",
+  // 下移组件
+  DownComponent = "DownComponent",
+  // 更新组件属性
+  UpdateComponentPropValue = "UpdateComponentPropValue",
 }
 
 export interface SetCurComponentPayload {
@@ -39,5 +43,6 @@ export interface Action {
     | SetCurComponentPayload
     | ComponentListItem[]
     | boolean
-    | number;
+    | number
+    | string;
 }

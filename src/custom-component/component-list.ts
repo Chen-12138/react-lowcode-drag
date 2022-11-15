@@ -126,13 +126,14 @@ const list: ComponentListItem[] = [
     },
   },
   {
-    component: "Pictrue",
+    component: "Image",
     label: "图片",
-    propValue: "双击编辑文字",
+    propValue:
+      "https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b11570bf5df54cea9728f1765e3b9e7b~tplv-k3u1fbpfcp-watermark.image?",
     icon: "tupian",
     style: {
       width: 200,
-      height: 28,
+      height: 200,
     },
   },
 ];

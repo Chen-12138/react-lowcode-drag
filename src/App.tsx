@@ -14,6 +14,7 @@ import TextAttr from "./custom-component/Text/TextAttr";
 import ButtonAttr from "./custom-component/Button/ButtonAttr";
 import RectAttr from "./custom-component/Rect/RectAttr";
 import CircleAttr from "./custom-component/Circle/CircleAttr";
+import ImageAttr from "./custom-component/Image/ImageAttr";
 
 function App() {
   const editorConfig = useSelector((state: State) => state.editor);
@@ -73,6 +74,10 @@ function App() {
 
       case "Circle": {
         return <CircleAttr />;
+      }
+
+      case "Image": {
+        return <ImageAttr />;
       }
     }
   };

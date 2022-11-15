@@ -29,7 +29,6 @@ const SketchColor: React.FC<SketchColorPorps> = ({ value, onChange }) => {
   const [colorData, setColorData] = useState({} as RGBColor);
 
   useEffect(() => {
-    console.log(value);
     setColorData(hexToRgba(value));
   }, [value]);
 

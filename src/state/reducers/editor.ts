@@ -1,5 +1,7 @@
+import { message } from "antd";
 import { CSSProperties } from "react";
 import { ComponentListItem } from "../../custom-component/component-list";
+import { swap } from "../../utils/utils";
 import {
   Action,
   ActionTypes,
@@ -28,7 +30,7 @@ export interface EditorState {
   // 画布组件数据
   componentData: ComponentListItem[];
   curComponent: ComponentListItem | null;
-  curComponentIndex: number | null;
+  curComponentIndex: number;
   // 点击画布时是否点中组件，主要用于取消选中组件用。
   // 如果没点中组件，并且在画布空白处弹起鼠标，则取消当前组件的选中状态
   isClickComponent: boolean;
@@ -49,7 +51,7 @@ export const editorInitialState: EditorState = {
   isInEdiotr: false,
   componentData: [],
   curComponent: null,
-  curComponentIndex: null,
+  curComponentIndex: -1,
   isClickComponent: false,
 };
 
@@ -146,6 +148,45 @@ const editorReducer = (
       state.componentData.splice(index, 1);
       return {
         ...state,
+      };
+    }
+
+    case ActionTypes.UpComponent: {
+      const { componentData, curComponentIndex } = state;
+      // 上移图层 index，表示元素在数组中越往后
+      if (curComponentIndex < componentData.length - 1) {
+        swap(componentData, curComponentIndex, curComponentIndex + 1);
+        state.curComponentIndex = curComponentIndex + 1;
+      } else {
+        message.info("已经到顶了");
+      }
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.DownComponent: {
+      const { componentData, curComponentIndex } = state;
+      if (curComponentIndex > 0) {
+        swap(componentData, curComponentIndex - 1, curComponentIndex);
+        state.curComponentIndex = curComponentIndex - 1;
+      } else {
+        message.info("已经到底了");
+      }
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.UpdateComponentPropValue: {
+      const curComponent = state.curComponent;
+      const propValue = action.payload as string;
+      if (curComponent) {
+        curComponent.propValue = propValue;
+      }
+      return {
+        ...state,
+        curComponent,
       };
     }
 

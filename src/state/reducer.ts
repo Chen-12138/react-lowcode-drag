@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import editor, { EditorState } from "./reducers/editor";
-import layer from "./reducers/layer";
+// import layer from "./reducers/layer";
 
 export interface State {
   editor: EditorState;
@@ -8,5 +8,4 @@ export interface State {
 
 export default combineReducers({
   editor,
-  layer,
 });
