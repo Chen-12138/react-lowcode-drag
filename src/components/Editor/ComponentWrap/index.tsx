@@ -95,8 +95,15 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
     const startTop = Number(pos.top);
     const startLeft = Number(pos.left);
 
+    let isFirst = true;
+
     const move = (moveEvent: any) => {
       moveEvent.stopPropagation();
+
+      if (isFirst) {
+        isFirst = false;
+        return;
+      }
 
       const curX = moveEvent.clientX;
       const curY = moveEvent.clientY;

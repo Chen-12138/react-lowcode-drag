@@ -27,7 +27,7 @@ const Editor = function () {
   });
 
   // 处理右键菜单
-  const handleContextMenu = useCallback((e: { [x: string]: any }) => {
+  const handleContextMenu = (e: { [x: string]: any }) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -38,34 +38,18 @@ const Editor = function () {
     const editorY = editorReactInfo?.y || 0;
 
     setContextMenuPos({
-      top: e.y - editorY,
-      left: e.x - editorX,
+      top: e.clientY - editorY,
+      left: e.clientX - editorX,
     });
     setShowContextMenu(true);
-  }, []);
+  };
 
   // 点击事件
-  const handleClick = useCallback((e: { [x: string]: any }) => {
-    e.preventDefault();
-    e.stopPropagation();
-
+  const handleClick = (e: { [x: string]: any }) => {
     if (e.button !== 2) {
-      if (showContextMenu === true) {
-        setShowContextMenu(false);
-      }
+      setShowContextMenu(false);
     }
-  }, []);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.addEventListener("contextmenu", handleContextMenu);
-      editorRef.current.addEventListener("click", handleClick);
-    }
-    return () => {
-      editorRef.current?.removeEventListener("contextmenu", handleContextMenu);
-      editorRef.current?.removeEventListener("click", handleClick);
-    };
-  }, [handleClick, handleContextMenu, editorRef.current]);
+  };
 
   // 因为其他页面也需要获取到Editor，所以直接把他放到redux里吧
   useEffect(() => {
@@ -104,6 +88,8 @@ const Editor = function () {
     <div
       className={styles.editor}
       ref={editorRef}
+      onContextMenu={handleContextMenu}
+      onClick={handleClick}
       style={{
         ...canvasStyleData,
         width: canvasStyleData.width + "px",

@@ -145,7 +145,11 @@ const editorReducer = (
 
     case ActionTypes.DeleteComponent: {
       const index = action.payload as number;
-      state.componentData.splice(index, 1);
+      if (index === undefined) {
+        state.componentData.splice(state.curComponentIndex);
+      } else {
+        state.componentData.splice(index, 1);
+      }
       return {
         ...state,
       };

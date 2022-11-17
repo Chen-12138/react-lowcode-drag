@@ -17,7 +17,9 @@ import CircleAttr from "./custom-component/Circle/CircleAttr";
 import ImageAttr from "./custom-component/Image/ImageAttr";
 
 function App() {
-  const editorConfig = useSelector((state: State) => state.editor);
+  const { editor, isClickComponent, curComponent } = useSelector(
+    (state: State) => state.editor
+  );
   const {
     addComponent,
     recordSnapShot,
@@ -30,7 +32,7 @@ function App() {
     e.stopPropagation();
 
     const index = e.dataTransfer.getData("index");
-    const rectInfo = editorConfig.editor.getBoundingClientRect();
+    const rectInfo = editor.getBoundingClientRect();
     if (index) {
       const component = cloneDeep(componentList[index]);
       component.style.top = e.clientY - rectInfo.y;
@@ -47,8 +49,8 @@ function App() {
     e.dataTransfer.dropEffect = "copy";
   };
 
-  const handleMouseUp = (e: any) => {
-    if (!editorConfig.isClickComponent) {
+  const deSelectCurComponent = (e: any) => {
+    if (!isClickComponent) {
       setCurComponent({ curComponent: null, curComponentIndex: null });
     }
   };
@@ -98,14 +100,14 @@ function App() {
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            onClick={deSelectCurComponent}
           >
             <Editor />
           </div>
         </section>
         {/* 右侧属性列表 */}
         <section className={styles.right}>
-          {editorConfig.curComponent ? (
+          {curComponent ? (
             <Tabs
               defaultActiveKey="attr"
               items={[
@@ -114,7 +116,7 @@ function App() {
                   key: "attr",
                   children: (
                     <div className={styles["attr-list"]}>
-                      {getAttrComponent(editorConfig.curComponent.component)}
+                      {getAttrComponent(curComponent.component)}
                     </div>
                   ),
                 },

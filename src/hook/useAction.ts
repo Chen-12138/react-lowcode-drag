@@ -75,7 +75,7 @@ export default function useAction() {
       });
     },
 
-    deleteComponent(index: number) {
+    deleteComponent(index?: number) {
       dispatch({
         type: ActionTypes.DeleteComponent,
         payload: index,
