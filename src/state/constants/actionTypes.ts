@@ -8,8 +8,6 @@ export enum ActionTypes {
   SetCanvasStyleData = "SetCanvasStyleData",
   // 添加组件
   AddComponent = "AddComponent",
-  // 记录快照
-  RecordSnapShot = "RecordSnapShot",
   // 设置当前组件
   SetCurComponent = "SetCurComponent",
   // 设置为点击组件状态
@@ -28,6 +26,12 @@ export enum ActionTypes {
   DownComponent = "DownComponent",
   // 更新组件属性
   UpdateComponentPropValue = "UpdateComponentPropValue",
+  // 记录快照
+  RecordSnapshot = "RecordSnapshot",
+  // 撤销
+  Undo = "Undo",
+  // 撤销撤销
+  Redo = "Redo",
 }
 
 export interface SetCurComponentPayload {

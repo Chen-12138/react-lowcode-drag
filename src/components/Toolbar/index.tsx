@@ -10,7 +10,7 @@ const Toolbar = function () {
     (state: State) => state.editor.canvasStyleData
   );
   const dispatch = useDispatch();
-  const { setCurComponent, setComponetData } = useAction();
+  const { setCurComponent, setComponetData, undo, redo } = useAction();
 
   const handleChange = (type: string, val: number | null) => {
     dispatch({
@@ -30,10 +30,10 @@ const Toolbar = function () {
 
   return (
     <Space className={styles.toolbar}>
-      {/* <Button>JSON</Button>
-      <Button>撤销</Button>
-      <Button>重做</Button>
-      <Button>插入图片</Button>
+      {/* <Button>JSON</Button> */}
+      <Button onClick={undo}>撤销</Button>
+      <Button onClick={redo}>重做</Button>
+      {/* <Button>插入图片</Button>
       <Button>预览</Button>
       <Button>保存</Button> */}
       <Button onClick={clearCanvas}>清空画布</Button>

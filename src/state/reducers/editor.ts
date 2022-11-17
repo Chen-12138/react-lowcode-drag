@@ -1,4 +1,5 @@
 import { message } from "antd";
+import { cloneDeep } from "lodash";
 import { CSSProperties } from "react";
 import { ComponentListItem } from "../../custom-component/component-list";
 import { swap } from "../../utils/utils";
@@ -32,8 +33,12 @@ export interface EditorState {
   curComponent: ComponentListItem | null;
   curComponentIndex: number;
   // 点击画布时是否点中组件，主要用于取消选中组件用。
-  // 如果没点中组件，并且在画布空白处弹起鼠标，则取消当前组件的选中状态
   isClickComponent: boolean;
+
+  // 编辑器快照数据
+  snapshotData: Array<ComponentListItem[]>;
+  // 快照索引
+  snapshotIndex: -1;
 }
 
 export const editorInitialState: EditorState = {
@@ -53,6 +58,9 @@ export const editorInitialState: EditorState = {
   curComponent: null,
   curComponentIndex: -1,
   isClickComponent: false,
+
+  snapshotData: [],
+  snapshotIndex: -1,
 };
 
 const editorReducer = (
@@ -191,6 +199,59 @@ const editorReducer = (
       return {
         ...state,
         curComponent,
+      };
+    }
+
+    case ActionTypes.RecordSnapshot: {
+      state.snapshotData[++state.snapshotIndex] = cloneDeep(
+        state.componentData
+      );
+
+      // 在 undo 过程中，添加新的快照时，要将它后面的快照清理掉
+      if (state.snapshotIndex < state.snapshotData.length - 1) {
+        state.snapshotData = state.snapshotData.slice(
+          0,
+          state.snapshotIndex + 1
+        );
+      }
+
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.Undo: {
+      if (state.snapshotIndex >= 0) {
+        state.snapshotIndex--;
+        state.componentData =
+          cloneDeep(state.snapshotData[state.snapshotIndex]) || [];
+        console.log();
+        if (state.curComponent !== null) {
+          // 如果当前组件不在componentData中，则置空
+          const needClean = state.componentData.find(
+            (component) => state.curComponent!.id === component.id
+          );
+          if (needClean) {
+            state.curComponent = null;
+            state.curComponentIndex = -1;
+          }
+        }
+      }
+
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.Redo: {
+      if (state.snapshotIndex < state.snapshotData.length - 1) {
+        state.snapshotIndex++;
+        state.componentData = cloneDeep(
+          state.snapshotData[state.snapshotIndex]
+        );
+      }
+      return {
+        ...state,
       };
     }
 

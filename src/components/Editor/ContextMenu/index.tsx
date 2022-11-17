@@ -14,16 +14,26 @@ const ContextMenu: React.FC<ContextMenuProps> = function ({ contextMenuPos }) {
     downComponent,
     deleteComponent,
     setClickComponentStatus,
+    recordSnapshot,
   } = useAction();
 
   const handleMouseUp = (e: any) => {
-    console.log("@@@ContenxtMenu, up");
     setClickComponentStatus(true);
   };
 
   const handleDelete = () => {
-    console.log("delete");
     deleteComponent();
+    recordSnapshot();
+  };
+
+  const handleUp = () => {
+    upComponent();
+    recordSnapshot();
+  };
+
+  const handleDown = () => {
+    downComponent();
+    recordSnapshot();
   };
 
   return (
@@ -42,8 +52,8 @@ const ContextMenu: React.FC<ContextMenuProps> = function ({ contextMenuPos }) {
         <li>锁定</li>
         <li>置顶</li>
         <li>置底</li>
-        <li onClick={upComponent}>上移</li>
-        <li onClick={downComponent}>下移</li>
+        <li onClick={handleUp}>上移</li>
+        <li onClick={handleDown}>下移</li>
       </ul>
     </div>
   );

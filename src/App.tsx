@@ -22,7 +22,7 @@ function App() {
   );
   const {
     addComponent,
-    recordSnapShot,
+    recordSnapshot,
     setCurComponent,
     setClickComponentStatus,
   } = useAction();
@@ -40,7 +40,7 @@ function App() {
       component.id = Math.random();
 
       addComponent(component);
-      recordSnapShot(component);
+      recordSnapshot();
     }
   };
 

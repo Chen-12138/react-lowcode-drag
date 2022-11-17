@@ -27,13 +27,6 @@ export default function useAction() {
       });
     },
 
-    recordSnapShot(component: ComponentListItem) {
-      dispatch({
-        type: ActionTypes.RecordSnapShot,
-        payload: component,
-      });
-    },
-
     setCurComponent({
       curComponent,
       curComponentIndex,
@@ -98,6 +91,24 @@ export default function useAction() {
       dispatch({
         type: ActionTypes.UpdateComponentPropValue,
         payload: propValue,
+      });
+    },
+
+    recordSnapshot() {
+      dispatch({
+        type: ActionTypes.RecordSnapshot,
+      });
+    },
+
+    undo() {
+      dispatch({
+        type: ActionTypes.Undo,
+      });
+    },
+
+    redo() {
+      dispatch({
+        type: ActionTypes.Redo,
       });
     },
   };

@@ -25,8 +25,12 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
   style,
 }) => {
   const { editor, curComponent } = useSelector((state: State) => state.editor);
-  const { setCurComponent, setComponentStyle, setClickComponentStatus } =
-    useAction();
+  const {
+    setCurComponent,
+    setComponentStyle,
+    setClickComponentStatus,
+    recordSnapshot,
+  } = useAction();
 
   const getPointStyle = (point: string) => {
     let { width, height } = defaultStyle;
@@ -95,15 +99,12 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
     const startTop = Number(pos.top);
     const startLeft = Number(pos.left);
 
-    let isFirst = true;
+    // 如果元素没有移动，则不保存快照
+    let hasMove = false;
 
     const move = (moveEvent: any) => {
       moveEvent.stopPropagation();
-
-      if (isFirst) {
-        isFirst = false;
-        return;
-      }
+      hasMove = true;
 
       const curX = moveEvent.clientX;
       const curY = moveEvent.clientY;
@@ -114,6 +115,7 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
     };
 
     const up = () => {
+      hasMove && recordSnapshot();
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
     };
@@ -134,7 +136,10 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
     const startX = e.clientX;
     const startY = e.clientY;
 
+    let needSave = false;
+
     const move = (mouseEvent: any) => {
+      needSave = true;
       const currX = mouseEvent.clientX;
       const currY = mouseEvent.clientY;
       const disY = currY - startY;
@@ -154,6 +159,7 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
     };
 
     const up = (e: any) => {
+      needSave && recordSnapshot();
       document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", up);
     };

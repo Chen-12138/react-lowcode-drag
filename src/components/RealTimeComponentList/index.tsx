@@ -8,8 +8,13 @@ const RealTimeComponentList = function () {
     (state: State) => state.editor
   );
 
-  const { setCurComponent, deleteComponent, upComponent, downComponent } =
-    useAction();
+  const {
+    setCurComponent,
+    deleteComponent,
+    upComponent,
+    downComponent,
+    recordSnapshot,
+  } = useAction();
 
   // 越往后层级越高，所以应该从后往前展示
   const transformIndex = (index: number) => {
@@ -23,12 +28,21 @@ const RealTimeComponentList = function () {
   const handleUpComponent = () => {
     setTimeout(() => {
       upComponent();
+      recordSnapshot();
     });
   };
 
   const handleDownComponent = () => {
     setTimeout(() => {
       downComponent();
+      recordSnapshot();
+    });
+  };
+
+  const handleDeleteComponent = () => {
+    setTimeout(() => {
+      deleteComponent();
+      recordSnapshot();
     });
   };
 
@@ -67,7 +81,7 @@ const RealTimeComponentList = function () {
               ></span>
               <span
                 className={`iconfont icon-shanchu ${styles.icon}`}
-                onClick={() => deleteComponent(transformIndex(index))}
+                onClick={handleDeleteComponent}
               ></span>
             </div>
           </div>
