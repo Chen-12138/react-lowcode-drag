@@ -15,6 +15,8 @@ import ButtonAttr from "./custom-component/Button/ButtonAttr";
 import RectAttr from "./custom-component/Rect/RectAttr";
 import CircleAttr from "./custom-component/Circle/CircleAttr";
 import ImageAttr from "./custom-component/Image/ImageAttr";
+import AnimationList from "./components/AnimationList";
+import "animate.css";
 
 function App() {
   const { editor, isClickComponent, curComponent } = useSelector(
@@ -123,7 +125,7 @@ function App() {
                 {
                   label: `动画`,
                   key: "animation",
-                  children: `Content of Tab Pane 2`,
+                  children: <AnimationList />,
                 },
                 {
                   label: `事件`,
