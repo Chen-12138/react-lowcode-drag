@@ -38,6 +38,7 @@ export interface ComponentListItem {
     // lineHeight: string;
     // letterSpacing: number;
     // textAlign: string;
+    // verticalAlign: string;
     // color: string;
   };
   [x: string]: any;
@@ -84,7 +85,7 @@ const list: ComponentListItem[] = [
   {
     component: "Rect",
     label: "矩形",
-    propValue: "矩形",
+    propValue: "&nbsp;",
     icon: "xingzhuang-juxing",
     style: {
       width: 100,
@@ -106,7 +107,7 @@ const list: ComponentListItem[] = [
   {
     component: "Circle",
     label: "圆形",
-    propValue: "双击编辑文字",
+    propValue: "&nbsp;",
     icon: "radio-on",
     style: {
       width: 100,

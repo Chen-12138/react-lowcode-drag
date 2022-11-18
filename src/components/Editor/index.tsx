@@ -52,7 +52,7 @@ const Editor = function () {
   const getComponent = (item: ComponentListItem) => {
     switch (item.component) {
       case "Text": {
-        return <Text style={getStyle(item.style)} />;
+        return <Text element={item} />;
       }
 
       case "Button": {
@@ -60,11 +60,11 @@ const Editor = function () {
       }
 
       case "Rect": {
-        return <Rect style={getStyle(item.style)} />;
+        return <Rect element={item} />;
       }
 
       case "Circle": {
-        return <Circle style={getStyle(item.style)} />;
+        return <Circle element={item} />;
       }
 
       case "Image": {
@@ -72,7 +72,7 @@ const Editor = function () {
       }
 
       default: {
-        return <Text style={getStyle(item.style)} />;
+        return <Text element={item} />;
       }
     }
   };
