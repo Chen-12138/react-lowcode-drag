@@ -15,16 +15,10 @@ import Circle from "../../custom-component/Circle";
 import Image from "../../custom-component/Image";
 
 const Editor = function () {
-  const { canvasStyleData, componentData, curComponent } = useSelector(
-    (state: State) => state.editor
-  );
-  const { setEditor } = useAction();
+  const { canvasStyleData, componentData, curComponent, menuShow } =
+    useSelector((state: State) => state.editor);
+  const { setEditor, showContextMenu, hideContextMenu } = useAction();
   const editorRef = useRef<HTMLDivElement>(null);
-  const [showContextMenu, setShowContextMenu] = useState(false);
-  const [contextMenuPos, setContextMenuPos] = useState({
-    top: 0,
-    left: 0,
-  });
 
   // 处理右键菜单
   const handleContextMenu = (e: { [x: string]: any }) => {
@@ -37,17 +31,16 @@ const Editor = function () {
     const editorX = editorReactInfo?.x || 0;
     const editorY = editorReactInfo?.y || 0;
 
-    setContextMenuPos({
+    showContextMenu({
       top: e.clientY - editorY,
       left: e.clientX - editorX,
     });
-    setShowContextMenu(true);
   };
 
   // 点击事件
   const handleClick = (e: { [x: string]: any }) => {
     if (e.button !== 2) {
-      setShowContextMenu(false);
+      hideContextMenu();
     }
   };
 
@@ -115,7 +108,7 @@ const Editor = function () {
       })}
 
       {/* 右击菜单 */}
-      {showContextMenu ? <ContextMenu contextMenuPos={contextMenuPos} /> : null}
+      {menuShow && <ContextMenu />}
     </div>
   );
 };

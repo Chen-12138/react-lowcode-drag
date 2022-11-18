@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { ComponentListItem } from "../custom-component/component-list";
 import {
   ActionTypes,
+  ContextMenuInfo,
   SetCurComponentPayload,
 } from "../state/constants/actionTypes";
 
@@ -109,6 +110,38 @@ export default function useAction() {
     redo() {
       dispatch({
         type: ActionTypes.Redo,
+      });
+    },
+
+    copy() {
+      dispatch({
+        type: ActionTypes.Copy,
+      });
+    },
+
+    paste(isMouse?: boolean) {
+      dispatch({
+        type: ActionTypes.Paste,
+        payload: isMouse,
+      });
+    },
+
+    cut() {
+      dispatch({
+        type: ActionTypes.Cut,
+      });
+    },
+
+    showContextMenu(info: ContextMenuInfo) {
+      dispatch({
+        type: ActionTypes.ShowContextMenu,
+        payload: info,
+      });
+    },
+
+    hideContextMenu() {
+      dispatch({
+        type: ActionTypes.HideContextMenu,
       });
     },
   };

@@ -2,10 +2,12 @@ import { message } from "antd";
 import { cloneDeep } from "lodash";
 import { CSSProperties } from "react";
 import { ComponentListItem } from "../../custom-component/component-list";
+import { copyData, restorePreCutData } from "../utils/copy";
 import { swap } from "../../utils/utils";
 import {
   Action,
   ActionTypes,
+  ContextMenuInfo,
   SetCurComponentPayload,
 } from "../constants/actionTypes";
 
@@ -17,6 +19,11 @@ export interface CanvasStyleData {
   opacity: number;
   backgroundColor: string;
   fontSize: number;
+}
+
+export interface CopyData {
+  data: ComponentListItem | null;
+  index: number;
 }
 
 export interface EditorState {
@@ -35,10 +42,20 @@ export interface EditorState {
   // 点击画布时是否点中组件，主要用于取消选中组件用。
   isClickComponent: boolean;
 
+  // 右键菜单信息
+  menuTop: number;
+  menuLeft: number;
+  menuShow: boolean;
+
+  // 记录相关
   // 编辑器快照数据
   snapshotData: Array<ComponentListItem[]>;
   // 快照索引
   snapshotIndex: -1;
+
+  // 复制相关
+  copyData: CopyData | null;
+  isCut: boolean;
 }
 
 export const editorInitialState: EditorState = {
@@ -59,8 +76,15 @@ export const editorInitialState: EditorState = {
   curComponentIndex: -1,
   isClickComponent: false,
 
+  menuTop: 0,
+  menuLeft: 0,
+  menuShow: false,
+
   snapshotData: [],
   snapshotIndex: -1,
+
+  copyData: null,
+  isCut: false,
 };
 
 const editorReducer = (
@@ -154,7 +178,7 @@ const editorReducer = (
     case ActionTypes.DeleteComponent: {
       const index = action.payload as number;
       if (index === undefined) {
-        state.componentData.splice(state.curComponentIndex);
+        state.componentData.splice(state.curComponentIndex, 1);
       } else {
         state.componentData.splice(index, 1);
       }
@@ -225,7 +249,6 @@ const editorReducer = (
         state.snapshotIndex--;
         state.componentData =
           cloneDeep(state.snapshotData[state.snapshotIndex]) || [];
-        console.log();
         if (state.curComponent !== null) {
           // 如果当前组件不在componentData中，则置空
           const needClean = state.componentData.find(
@@ -252,6 +275,88 @@ const editorReducer = (
       }
       return {
         ...state,
+      };
+    }
+
+    case ActionTypes.Copy: {
+      if (!state.curComponent) {
+        message.info("请先选择组件");
+        return;
+      }
+      // 如果有剪切的数据，需要先还原
+      restorePreCutData(state);
+      copyData(state);
+
+      state.isCut = false;
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.Paste: {
+      const isMouse = action.payload;
+
+      if (!state.copyData) {
+        message.info("请先选择组件");
+        return;
+      }
+
+      const data = cloneDeep(state.copyData?.data!);
+      const id = Math.random();
+      data.id = id;
+
+      if (data) {
+        if (isMouse) {
+          data.style.top = state.menuTop;
+          data.style.left = state.menuLeft;
+        } else {
+          data.style.top += 10;
+          data.style.left += 10;
+        }
+      }
+      state.componentData.push(data);
+
+      if (state.isCut) {
+        state.copyData = null;
+      }
+
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.Cut: {
+      if (!state.curComponent) {
+        message.info("请先选择组件");
+        return;
+      }
+      // 如果重复剪切，需要恢复上一次剪切的数据
+      restorePreCutData(state);
+      copyData(state);
+
+      state.componentData.splice(state.curComponentIndex, 1);
+
+      state.isCut = true;
+
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.ShowContextMenu: {
+      const { top, left } = action.payload as ContextMenuInfo;
+      state.menuShow = true;
+      state.menuTop = top;
+      state.menuLeft = left;
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.HideContextMenu: {
+      return {
+        ...state,
+        menuShow: false,
       };
     }
 

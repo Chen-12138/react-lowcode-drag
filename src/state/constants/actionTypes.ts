@@ -32,11 +32,26 @@ export enum ActionTypes {
   Undo = "Undo",
   // 撤销撤销
   Redo = "Redo",
+  // 复制
+  Copy = "Copy",
+  // 粘贴
+  Paste = "Paste",
+  // 剪切
+  Cut = "Cut",
+  // 显示右键菜单
+  ShowContextMenu = "ShowContextMenu",
+  // 隐藏右键菜单
+  HideContextMenu = "HideContextMenu",
 }
 
 export interface SetCurComponentPayload {
   curComponent: ComponentListItem | null;
   curComponentIndex: number | null;
+}
+
+export interface ContextMenuInfo {
+  top: number;
+  left: number;
 }
 
 export interface Action {
@@ -46,6 +61,7 @@ export interface Action {
     | ComponentListItem
     | SetCurComponentPayload
     | ComponentListItem[]
+    | ContextMenuInfo
     | boolean
     | number
     | string;
