@@ -1,14 +1,14 @@
-import { CSSProperties } from "react";
+import { ComponentListItem } from "../component-list";
 import styles from "./index.less";
 
 interface ButtonProps {
-  style: CSSProperties;
+  element: ComponentListItem;
 }
 
-const Button: React.FC<ButtonProps> = function ({ style }) {
+const Button: React.FC<ButtonProps> = function ({ element }) {
   return (
-    <div className={styles.button} style={style}>
-      Button
+    <div className={styles.button} style={element.style}>
+      {element.propValue}
     </div>
   );
 };

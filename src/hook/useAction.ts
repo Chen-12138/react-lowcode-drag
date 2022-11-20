@@ -88,6 +88,18 @@ export default function useAction() {
       });
     },
 
+    topComponent() {
+      dispatch({
+        type: ActionTypes.TopComponent,
+      });
+    },
+
+    bottomComponent() {
+      dispatch({
+        type: ActionTypes.BottomComponent,
+      });
+    },
+
     updateComponentPropValue(propValue: string) {
       dispatch({
         type: ActionTypes.UpdateComponentPropValue,

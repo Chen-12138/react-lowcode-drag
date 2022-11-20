@@ -25,6 +25,10 @@ export enum ActionTypes {
   UpComponent = "UpComponent",
   // 下移组件
   DownComponent = "DownComponent",
+  // 置顶组件
+  TopComponent = "TopComponent",
+  // 置底组件
+  BottomComponent = "BottomComponent",
   // 更新组件属性
   UpdateComponentPropValue = "UpdateComponentPropValue",
   // 记录快照

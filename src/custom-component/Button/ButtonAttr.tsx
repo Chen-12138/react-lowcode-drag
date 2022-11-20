@@ -3,7 +3,7 @@ import CommonAttr from "../common/CommonAttr";
 const ButtonAttr = () => {
   return (
     <div>
-      <h1>ButtonAttr</h1>
+      <h3>ButtonAttr</h3>
       <CommonAttr />
     </div>
   );

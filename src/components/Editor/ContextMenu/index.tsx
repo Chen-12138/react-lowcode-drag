@@ -11,6 +11,8 @@ const ContextMenu: React.FC = function () {
   const {
     upComponent,
     downComponent,
+    topComponent,
+    bottomComponent,
     deleteComponent,
     setClickComponentStatus,
     recordSnapshot,
@@ -35,6 +37,16 @@ const ContextMenu: React.FC = function () {
 
   const handleDown = () => {
     downComponent();
+    recordSnapshot();
+  };
+
+  const handleTop = () => {
+    topComponent();
+    recordSnapshot();
+  };
+
+  const handleBottom = () => {
+    bottomComponent();
     recordSnapshot();
   };
 
@@ -64,8 +76,8 @@ const ContextMenu: React.FC = function () {
             <li onClick={handleCut}>剪切</li>
             <li onClick={handleDelete}>删除</li>
             <li>锁定</li>
-            <li>置顶</li>
-            <li>置底</li>
+            <li onClick={handleTop}>置顶</li>
+            <li onClick={handleBottom}>置底</li>
             <li onClick={handleUp}>上移</li>
             <li onClick={handleDown}>下移</li>
           </>

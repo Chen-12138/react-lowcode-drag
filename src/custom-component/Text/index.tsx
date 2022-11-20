@@ -1,4 +1,4 @@
-import { CSSProperties, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../state/reducer";
 import { ComponentListItem } from "../component-list";
@@ -9,7 +9,9 @@ interface TextProps {
 }
 
 const Text: React.FC<TextProps> = function ({ element }) {
-  const { editMode } = useSelector((state: State) => state.editor);
+  const { editMode, curComponent } = useSelector(
+    (state: State) => state.editor
+  );
   const [canEdit, setCanEdit] = useState(false);
   const textRef = useRef(null);
 
@@ -25,9 +27,18 @@ const Text: React.FC<TextProps> = function ({ element }) {
   };
 
   const handleBlur = (e: any) => {
-    element.propValue = e.target.innerHTML || "&nbsp;";
-    setCanEdit(false);
+    if (e.target !== textRef.current) {
+      element.propValue = e.target.innerHTML || "&nbsp;";
+      setCanEdit(false);
+    }
   };
+
+  useEffect(() => {
+    if (curComponent !== element) {
+      setCanEdit(false);
+      clearSelectText();
+    }
+  }, [curComponent]);
 
   const selectText = (element: Node) => {
     const selection = window.getSelection();
@@ -36,6 +47,13 @@ const Text: React.FC<TextProps> = function ({ element }) {
     if (selection) {
       selection.removeAllRanges();
       selection.addRange(range);
+    }
+  };
+
+  const clearSelectText = () => {
+    const selection = window.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
     }
   };
 
@@ -50,6 +68,7 @@ const Text: React.FC<TextProps> = function ({ element }) {
             contentEditable={canEdit}
             onDoubleClick={setEdit}
             onMouseDown={handleMouseDown}
+            onClick={handleBlur}
             onBlur={handleBlur}
             dangerouslySetInnerHTML={{ __html: element.propValue }}
           ></div>

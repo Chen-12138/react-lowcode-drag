@@ -1,9 +1,9 @@
-export interface styleFormItem {
+export interface StyleFormItem {
   key: string;
   label: string;
 }
 
-export const styleData: styleFormItem[] = [
+export const styleData: StyleFormItem[] = [
   { key: "left", label: "x 坐标" },
   { key: "top", label: "y 坐标" },
   { key: "rotate", label: "旋转角度" },
@@ -23,3 +23,57 @@ export const styleData: styleFormItem[] = [
   { key: "verticalAlign", label: "上下对齐" },
   { key: "opacity", label: "不透明度" },
 ];
+
+interface OptionType {
+  label: string;
+  value: string;
+}
+
+export const textAlignOptions: OptionType[] = [
+  {
+    label: "左对齐",
+    value: "left",
+  },
+  {
+    label: "居中",
+    value: "center",
+  },
+  {
+    label: "右对齐",
+    value: "right",
+  },
+];
+
+export const borderStyleOptions: OptionType[] = [
+  {
+    label: "实线",
+    value: "solid",
+  },
+  {
+    label: "虚线",
+    value: "dashed",
+  },
+];
+
+export const verticalAlignOptions: OptionType[] = [
+  {
+    label: "上对齐",
+    value: "top",
+  },
+  {
+    label: "居中对齐",
+    value: "middle",
+  },
+  {
+    label: "下对齐",
+    value: "bottom",
+  },
+];
+
+export const selectKey = ["textAlign", "borderStyle", "verticalAlign"];
+
+export const optionMap: { [x: string]: OptionType[] } = {
+  textAlign: textAlignOptions,
+  borderStyle: borderStyleOptions,
+  verticalAlign: verticalAlignOptions,
+};

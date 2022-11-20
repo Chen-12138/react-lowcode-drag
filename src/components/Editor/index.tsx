@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { State } from "../../state/reducer";
 import ContextMenu from "./ContextMenu";
@@ -100,7 +100,7 @@ const Editor = function () {
       }
 
       case "Button": {
-        return <Button style={getStyle(item.style)} />;
+        return <Button element={item} />;
       }
 
       case "Rect": {

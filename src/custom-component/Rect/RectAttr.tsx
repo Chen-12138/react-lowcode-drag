@@ -3,7 +3,7 @@ import CommonAttr from "../common/CommonAttr";
 const RectAttr = () => {
   return (
     <div>
-      <h1>RectAttr</h1>
+      <h3>RectAttr</h3>
       <CommonAttr />
     </div>
   );

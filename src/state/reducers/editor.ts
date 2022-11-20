@@ -215,6 +215,32 @@ const editorReducer = (
       };
     }
 
+    case ActionTypes.TopComponent: {
+      if (state.curComponentIndex < state.componentData.length - 1) {
+        state.componentData.splice(state.curComponentIndex, 1);
+        state.componentData.push(state.curComponent!);
+        state.curComponentIndex = state.componentData.length - 1;
+      } else {
+        message.info("已经到顶了");
+      }
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.BottomComponent: {
+      if (state.curComponentIndex > 0) {
+        state.componentData.splice(state.curComponentIndex, 1);
+        state.componentData.unshift(state.curComponent!);
+        state.curComponentIndex = 0;
+      } else {
+        message.info("已经到底了");
+      }
+      return {
+        ...state,
+      };
+    }
+
     case ActionTypes.UpdateComponentPropValue: {
       const curComponent = state.curComponent;
       const propValue = action.payload as string;
