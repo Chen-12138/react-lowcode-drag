@@ -8,6 +8,7 @@ import {
   Action,
   ActionTypes,
   ContextMenuInfo,
+  EditAnimationPayload,
   SetCurComponentPayload,
 } from "../constants/actionTypes";
 
@@ -357,6 +358,40 @@ const editorReducer = (
       return {
         ...state,
         menuShow: false,
+      };
+    }
+
+    // 动画相关
+    case ActionTypes.AddAnimation: {
+      if (state.curComponent) {
+        state.curComponent.animations.push(action.payload);
+      }
+
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.EditAnimation: {
+      const { index, animate } = action.payload as EditAnimationPayload;
+      if (state.curComponent) {
+        state.curComponent.animations[index] = {
+          ...state.curComponent.animations[index],
+          ...animate,
+        };
+      }
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.DeleteAnimation: {
+      const index = action.payload as number;
+      if (state.curComponent) {
+        state.curComponent.animations.splice(index, 1);
+      }
+      return {
+        ...state,
       };
     }
 

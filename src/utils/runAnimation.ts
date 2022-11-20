@@ -4,9 +4,9 @@ export default async function runAnimation(
   $el: any,
   animations: AnimationItem[] = []
 ) {
-  const play = (animation: any) =>
+  const play = (animation: AnimationItem) =>
     new Promise<void>((resolve) => {
-      const { animationTime, value = "", isLoop } = animation;
+      const { animationTime, value = "", isLoop = false } = animation;
       $el.style.setProperty("--time", animationTime + "s");
       $el.classList.add(value, "animate__animated", utilsHandle(isLoop));
       const removeAnimation = () => {
@@ -27,5 +27,5 @@ export default async function runAnimation(
 }
 
 function utilsHandle(isLoop: boolean) {
-  return isLoop ? "infinite" : "no-infinite";
+  return isLoop ? "animate__infinite" : "animate__no-infinite";
 }

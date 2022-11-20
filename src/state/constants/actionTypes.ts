@@ -1,4 +1,5 @@
 import { ComponentListItem } from "../../custom-component/component-list";
+import { AnimationItem } from "../../utils/animationClassData";
 import { CanvasStyleData } from "../reducers/editor";
 
 export enum ActionTypes {
@@ -42,6 +43,14 @@ export enum ActionTypes {
   ShowContextMenu = "ShowContextMenu",
   // 隐藏右键菜单
   HideContextMenu = "HideContextMenu",
+
+  // 动画相关
+  // 添加动画
+  AddAnimation = "AddAnimation",
+  // 编辑动画
+  EditAnimation = "EditAnimation",
+  // 删除动画
+  DeleteAnimation = "DeleteAnimation",
 }
 
 export interface SetCurComponentPayload {
@@ -54,6 +63,11 @@ export interface ContextMenuInfo {
   left: number;
 }
 
+export interface EditAnimationPayload {
+  index: number;
+  animate: AnimationItem;
+}
+
 export interface Action {
   type: ActionTypes;
   payload:
@@ -62,6 +76,7 @@ export interface Action {
     | SetCurComponentPayload
     | ComponentListItem[]
     | ContextMenuInfo
+    | EditAnimationPayload
     | boolean
     | number
     | string;
