@@ -156,5 +156,23 @@ export default function useAction() {
         type: ActionTypes.HideContextMenu,
       });
     },
+
+    clearCanvas() {
+      console.log("clear");
+      dispatch({
+        type: ActionTypes.SetComponentData,
+        payload: [],
+      });
+      dispatch({
+        type: ActionTypes.SetCurComponent,
+        payload: {
+          curComponent: null,
+          curComponentIndex: null,
+        },
+      });
+      dispatch({
+        type: ActionTypes.RecordSnapshot,
+      });
+    },
   };
 }

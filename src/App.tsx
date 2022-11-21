@@ -17,6 +17,7 @@ import CircleAttr from "./custom-component/Circle/CircleAttr";
 import ImageAttr from "./custom-component/Image/ImageAttr";
 import AnimationList from "./components/AnimationList";
 import "animate.css";
+import useKeyBoard from "./hook/useKeyboard";
 
 function App() {
   const { editor, isClickComponent, curComponent } = useSelector(
@@ -28,6 +29,9 @@ function App() {
     setCurComponent,
     setClickComponentStatus,
   } = useAction();
+
+  // 监听键盘事件
+  useKeyBoard();
 
   const handleDrop = (e: any) => {
     e.preventDefault();

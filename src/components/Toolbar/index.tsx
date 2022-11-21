@@ -13,7 +13,7 @@ const Toolbar = function () {
 
   const { editor } = useSelector((state: State) => state.editor);
   const dispatch = useDispatch();
-  const { setCurComponent, setComponetData, undo, redo } = useAction();
+  const { undo, redo, clearCanvas } = useAction();
 
   const handleChange = (type: string, val: number | null) => {
     dispatch({
@@ -24,11 +24,6 @@ const Toolbar = function () {
         scale: type === "scale" ? val : editorConfig.scale,
       },
     });
-  };
-
-  const clearCanvas = () => {
-    setCurComponent({ curComponent: null, curComponentIndex: null });
-    setComponetData([]);
   };
 
   const handleScreenshot = () => {
@@ -62,7 +57,7 @@ const Toolbar = function () {
         <span>画布比例</span>
         <InputNumber
           type="text"
-          value={editorConfig.height}
+          value={editorConfig.scale}
           onChange={(val) => handleChange("scale", val)}
         />{" "}
         %
