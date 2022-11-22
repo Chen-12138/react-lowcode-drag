@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { State } from "../../state/reducer";
+import { State } from "@/state/reducer";
 import ContextMenu from "./ContextMenu";
 import Grid from "./Grid";
 import ComponentWrap from "./ComponentWrap";
-import Text from "../../custom-component/Text";
+import Text from "@/custom-component/Text";
 import styles from "./index.less";
-import { ComponentListItem } from "../../custom-component/component-list";
-import { getComponentWrapStyle, getStyle } from "../../utils/style";
-import useAction from "../../hook/useAction";
-import Button from "../../custom-component/Button";
-import Rect from "../../custom-component/Rect";
-import Circle from "../../custom-component/Circle";
-import Image from "../../custom-component/Image";
+import { ComponentListItem } from "@/custom-component/component-list";
+import { getComponentWrapStyle, getStyle } from "@/utils/style";
+import useAction from "@/hook/useAction";
+import Button from "@/custom-component/Button";
+import Rect from "@/custom-component/Rect";
+import Circle from "@/custom-component/Circle";
+import Image from "@/custom-component/Image";
 import Area from "./Area";
 
 interface AreaStyle {

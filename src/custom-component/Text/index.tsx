@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { State } from "../../state/reducer";
+import { State } from "@/state/reducer";
 import { ComponentListItem } from "../component-list";
 import styles from "./index.less";
 

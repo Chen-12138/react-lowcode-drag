@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1272737",
+      "name": "商店",
+      "font_class": "store",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "2087554",
+      "name": "设计",
+      "font_class": "sheji",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "4315716",
       "name": "文本",
       "font_class": "wenben",
@@ -46,6 +60,20 @@
       "font_class": "shanchu",
       "unicode": "e8b6",
       "unicode_decimal": 59574
+    },
+    {
+      "icon_id": "11372704",
+      "name": "数据",
+      "font_class": "shuju",
+      "unicode": "e8b9",
+      "unicode_decimal": 59577
+    },
+    {
+      "icon_id": "12704442",
+      "name": "模板",
+      "font_class": "moban",
+      "unicode": "e603",
+      "unicode_decimal": 58883
     },
     {
       "icon_id": "17544289",

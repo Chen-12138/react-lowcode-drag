@@ -1,7 +1,7 @@
 import { Form, Input, InputNumber } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { ActionTypes } from "../../state/constants/actionTypes";
-import { State } from "../../state/reducer";
+import { ActionTypes } from "@/state/constants/actionTypes";
+import { State } from "@/state/reducer";
 import SketchColor from "../SketchColor";
 import styles from "./index.less";
 

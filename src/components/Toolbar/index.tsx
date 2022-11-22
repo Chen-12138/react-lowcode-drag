@@ -1,8 +1,8 @@
 import { Button, InputNumber, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import useAction from "../../hook/useAction";
-import { ActionTypes } from "../../state/constants/actionTypes";
-import { State } from "../../state/reducer";
+import useAction from "@/hook/useAction";
+import { ActionTypes } from "@/state/constants/actionTypes";
+import { State } from "@/state/reducer";
 import styles from "./index.less";
 import html2canvas from "html2canvas";
 

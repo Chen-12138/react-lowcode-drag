@@ -1,9 +1,9 @@
 import { message } from "antd";
 import { cloneDeep } from "lodash";
 import { CSSProperties } from "react";
-import { ComponentListItem } from "../../custom-component/component-list";
+import { ComponentListItem } from "@/custom-component/component-list";
 import { copyData, restorePreCutData } from "../utils/copy";
-import { swap } from "../../utils/utils";
+import { swap } from "@/utils/utils";
 import {
   Action,
   ActionTypes,

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import useAction from "../../../hook/useAction";
-import { State } from "../../../state/reducer";
+import useAction from "@/hook/useAction";
+import { State } from "@/state/reducer";
 import styles from "./index.less";
 
 const ContextMenu: React.FC = function () {

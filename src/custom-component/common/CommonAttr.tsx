@@ -1,10 +1,10 @@
 import { Form, InputNumber, Select, Collapse } from "antd";
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
-import SketchColor from "../../components/SketchColor";
-import useAction from "../../hook/useAction";
-import { State } from "../../state/reducer";
-import { optionMap, styleData } from "../../utils/attr";
+import SketchColor from "@/components/SketchColor";
+import useAction from "@/hook/useAction";
+import { State } from "@/state/reducer";
+import { optionMap, styleData } from "@/utils/attr";
 
 const { Panel } = Collapse;
 

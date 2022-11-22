@@ -1,6 +1,6 @@
 import { Form, InputNumber, Modal, ModalProps, Switch } from "antd";
-import useAnimationAction from "../../../hook/useAnimationAction";
-import { AnimationItem } from "../../../utils/animationClassData";
+import useAnimationAction from "@/hook/useAnimationAction";
+import { AnimationItem } from "@/utils/animationClassData";
 
 interface AnimationSettingModalProps extends ModalProps {
   config?: AnimationItem;

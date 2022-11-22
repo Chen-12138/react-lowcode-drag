@@ -1,12 +1,12 @@
 import { CSSProperties, ReactElement, useEffect, useMemo, useRef } from "react";
-import { ComponentListItem } from "../../../custom-component/component-list";
-import useAction from "../../../hook/useAction";
+import { ComponentListItem } from "@/custom-component/component-list";
+import useAction from "@/hook/useAction";
 import styles from "./index.less";
 import { pointList, initialAngle, angleToCursor } from "./const";
 import { useSelector } from "react-redux";
-import { State } from "../../../state/reducer";
-import { mod360 } from "../../../utils/translate";
-import runAnimation from "../../../utils/runAnimation";
+import { State } from "@/state/reducer";
+import { mod360 } from "@/utils/translate";
+import runAnimation from "@/utils/runAnimation";
 
 interface ComponentWrapProps {
   active?: boolean;

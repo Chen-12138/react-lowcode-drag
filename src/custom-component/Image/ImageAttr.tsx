@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
-import useAction from "../../hook/useAction";
-import { State } from "../../state/reducer";
+import useAction from "@/hook/useAction";
+import { State } from "@/state/reducer";
 
 const ImageAttr = () => {
   const { curComponent } = useSelector((state: State) => state.editor);

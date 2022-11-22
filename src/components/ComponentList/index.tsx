@@ -1,5 +1,5 @@
 import styles from "./index.less";
-import componentList from "../../custom-component/component-list";
+import componentList from "@/custom-component/component-list";
 
 const ComponentList = function () {
   const handleDragStart = function (e: any) {

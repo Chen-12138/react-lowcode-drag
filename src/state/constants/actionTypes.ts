@@ -1,5 +1,5 @@
-import { ComponentListItem } from "../../custom-component/component-list";
-import { AnimationItem } from "../../utils/animationClassData";
+import { ComponentListItem } from "@/custom-component/component-list";
+import { AnimationItem } from "@/utils/animationClassData";
 import { CanvasStyleData } from "../reducers/editor";
 
 export enum ActionTypes {

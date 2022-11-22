@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1668329947722') format('truetype');
+  src: url('iconfont.ttf?t=1669125462579') format('truetype');
 }
 
 .iconfont {
@@ -9,6 +9,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-store:before {
+  content: "\e655";
+}
+
+.icon-sheji:before {
+  content: "\e604";
 }
 
 .icon-wenben:before {
@@ -33,6 +41,14 @@
 
 .icon-shanchu:before {
   content: "\e8b6";
+}
+
+.icon-shuju:before {
+  content: "\e8b9";
+}
+
+.icon-moban:before {
+  content: "\e603";
 }
 
 .icon-anniu:before {
