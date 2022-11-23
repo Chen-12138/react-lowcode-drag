@@ -2,11 +2,12 @@ import { Navigate } from "react-router-dom";
 import Login from "../views/Login";
 import Editor from "../views/Editor";
 import Home from "../views/Home";
+import MyWork from "@/views/Home/MyWork";
 
 const route = [
   {
     path: "/",
-    element: <Navigate to="/home" />,
+    element: <Navigate to="/home/my-work" />,
   },
   {
     path: "/login",
@@ -15,11 +16,22 @@ const route = [
   {
     path: "/home",
     element: <Home />,
-    //创建子路由
     children: [
       {
-        path: "mywork",
-        element: <div>123</div>,
+        path: "my-work",
+        element: <MyWork />,
+      },
+      {
+        path: "my-template",
+        element: <div>my-template</div>,
+      },
+      {
+        path: "my-data",
+        element: <div>my-data</div>,
+      },
+      {
+        path: "creative-template",
+        element: <div>creative-template</div>,
       },
     ],
   },

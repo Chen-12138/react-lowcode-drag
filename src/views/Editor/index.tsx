@@ -1,5 +1,5 @@
 import Toolbar from "@/components/Toolbar";
-import styles from "@/App.less";
+import styles from "./index.less";
 import ComponentList from "@/components/ComponentList";
 import RealTimeComponentList from "@/components/RealTimeComponentList";
 import { Tabs } from "antd";
@@ -18,6 +18,7 @@ import ImageAttr from "@/custom-component/Image/ImageAttr";
 import AnimationList from "@/components/AnimationList";
 import "animate.css";
 import useKeyBoard from "@/hook/useKeyboard";
+import Header from "@/components/Header";
 
 function App() {
   const { editor, isClickComponent, curComponent } = useSelector(
@@ -92,7 +93,10 @@ function App() {
 
   return (
     <div className={styles.home}>
-      <Toolbar />
+      <Header>
+        <Toolbar />
+      </Header>
+
       <main>
         {/* 左侧组件列表 */}
         <section className={styles.left}>
