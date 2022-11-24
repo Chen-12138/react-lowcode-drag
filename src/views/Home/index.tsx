@@ -1,8 +1,7 @@
 import React from "react";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import logo from "@/asset/img/logo.png";
 import Header from "@/components/Header";
 
 const { Content, Sider } = Layout;

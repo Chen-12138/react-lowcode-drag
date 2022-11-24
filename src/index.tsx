@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.min.css";
 import "./asset/iconfont/iconfont.css";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import store from "./state/store";
 
 const root = ReactDOM.createRoot(
@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   </React.StrictMode>
 );

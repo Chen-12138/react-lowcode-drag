@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { message, Form, Button, Input } from "antd";
 import styles from "./index.less";
+import { useNavigate } from "react-router-dom";
 
 const Login = (props: {
   history?: { push: (arg0: string) => void; replace: (arg0: string) => void };
 }) => {
   const [type, setType] = useState<"login" | "register">("login");
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const handleChangeType = () => {
     if (type === "login") {
@@ -15,12 +18,38 @@ const Login = (props: {
     }
   };
 
+  const handleSubmit = (values: any) => {
+    console.log(values);
+    if (type === "login") {
+      handleLogin(values);
+    } else {
+      handleRegister(values);
+    }
+  };
+
+  const handleLogin = (values: any) => {
+    console.log("login", values);
+    // 服务端还没写，暂时处理
+    localStorage.setItem("user", JSON.stringify(values));
+    linkToHome();
+  };
+
+  const handleRegister = (values: any) => {
+    console.log("register", values);
+  };
+
+  const linkToHome = () => {
+    navigate("/home/my-work", {
+      replace: false,
+    });
+  };
+
   return (
     <>
       <div className={styles["page-login"]}>
         <div className={styles["login-page-inner"]}>
           <p className={styles["title"]}>Lucky H5</p>
-          <Form autoComplete="off">
+          <Form autoComplete="off" form={form} onFinish={handleSubmit}>
             <Form.Item
               name="username"
               rules={[

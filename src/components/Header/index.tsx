@@ -2,6 +2,7 @@ import styles from "./index.less";
 import logo from "../../asset/img/logo.png";
 import { useNavigate } from "react-router-dom";
 import { ReactElement } from "react";
+import UserBtn from "./UserBtn";
 
 interface HeaderProps {
   children?: ReactElement;
@@ -30,8 +31,8 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
           <span>Lucky H5</span>
         </div>
         <div className={styles["header-center-wrapper"]}>{children}</div>
-        <div className={styles["user-wrapper"]} onClick={linkToLogin}>
-          登录
+        <div className={styles["user-wrapper"]}>
+          <UserBtn />
         </div>
       </div>
     </div>
