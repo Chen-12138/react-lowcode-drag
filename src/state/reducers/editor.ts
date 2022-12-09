@@ -7,6 +7,7 @@ import { swap } from "@/utils/utils";
 import {
   Action,
   ActionTypes,
+  AddEventPayload,
   ContextMenuInfo,
   EditAnimationPayload,
   SetCurComponentPayload,
@@ -415,6 +416,27 @@ const editorReducer = (
       const index = action.payload as number;
       if (state.curComponent) {
         state.curComponent.animations.splice(index, 1);
+      }
+      return {
+        ...state,
+      };
+    }
+
+    // 事件相关
+    case ActionTypes.Addevent: {
+      const { event, param } = action.payload as AddEventPayload;
+      if (state.curComponent) {
+        state.curComponent.events[event] = param;
+      }
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.RemoveEvent: {
+      const { event } = action.payload as AddEventPayload;
+      if (state.curComponent) {
+        delete state.curComponent.events[event];
       }
       return {
         ...state,

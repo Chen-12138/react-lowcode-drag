@@ -16,6 +16,7 @@ import RectAttr from "@/custom-component/Rect/RectAttr";
 import CircleAttr from "@/custom-component/Circle/CircleAttr";
 import ImageAttr from "@/custom-component/Image/ImageAttr";
 import AnimationList from "@/components/AnimationList";
+import EventList from "@/components/EventList";
 import "animate.css";
 import useKeyBoard from "@/hook/useKeyboard";
 import Header from "@/components/Header";
@@ -138,7 +139,7 @@ function App() {
                 {
                   label: `事件`,
                   key: "events",
-                  children: `Content of Tab Pane 3`,
+                  children: <EventList />,
                 },
               ]}
             />

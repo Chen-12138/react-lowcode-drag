@@ -20,7 +20,7 @@ const UserBtn = () => {
   };
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("user") || "");
+    const userInfo = {};
     setUser(userInfo);
   }, []);
 

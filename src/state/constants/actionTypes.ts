@@ -55,6 +55,12 @@ export enum ActionTypes {
   EditAnimation = "EditAnimation",
   // 删除动画
   DeleteAnimation = "DeleteAnimation",
+
+  // 事件相关
+  // 添加事件
+  Addevent = "AddEvent",
+  // 删除事件
+  RemoveEvent = "RemoveEvent",
 }
 
 export interface SetCurComponentPayload {
@@ -72,6 +78,11 @@ export interface EditAnimationPayload {
   animate: AnimationItem;
 }
 
+export interface AddEventPayload {
+  event: string;
+  param: string;
+}
+
 export interface Action {
   type: ActionTypes;
   payload:
@@ -81,6 +92,7 @@ export interface Action {
     | ComponentListItem[]
     | ContextMenuInfo
     | EditAnimationPayload
+    | AddEventPayload
     | boolean
     | number
     | string;
