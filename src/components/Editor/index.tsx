@@ -14,6 +14,7 @@ import Rect from "@/custom-component/Rect";
 import Circle from "@/custom-component/Circle";
 import Image from "@/custom-component/Image";
 import Area from "./Area";
+import Music from "@/custom-component/Music";
 
 interface AreaStyle {
   top: number;
@@ -54,7 +55,7 @@ const Editor = function () {
 
   // 点击事件
   const handleClick = (e: any) => {
-    if (e.button !== 2) {
+    if (e.button !== 2 && menuShow) {
       hideContextMenu();
     }
   };
@@ -113,6 +114,10 @@ const Editor = function () {
 
       case "Image": {
         return <Image propValue={item.propValue} />;
+      }
+
+      case "Music": {
+        return <Music element={item} />;
       }
 
       default: {

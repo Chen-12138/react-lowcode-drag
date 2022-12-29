@@ -69,6 +69,13 @@ export default function useAction() {
       });
     },
 
+    setComponentContent(content: string) {
+      dispatch({
+        type: ActionTypes.SetComponentContent,
+        payload: content,
+      });
+    },
+
     deleteComponent(index?: number) {
       dispatch({
         type: ActionTypes.DeleteComponent,

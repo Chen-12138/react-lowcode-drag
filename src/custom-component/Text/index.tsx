@@ -1,8 +1,9 @@
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { State } from "@/state/reducer";
 import { ComponentListItem } from "../component-list";
 import styles from "./index.less";
+import useAction from "@/hook/useAction";
 
 interface TextProps {
   element: ComponentListItem;
@@ -12,12 +13,13 @@ const Text: React.FC<TextProps> = function ({ element }) {
   const { editMode, curComponent } = useSelector(
     (state: State) => state.editor
   );
+  const { setComponentContent } = useAction();
   const [canEdit, setCanEdit] = useState(false);
-  const textRef = useRef(null);
+  const textRef = useRef({} as HTMLDivElement);
 
   const setEdit = () => {
     setCanEdit(true);
-    selectText(textRef.current!);
+    selectText(textRef.current);
   };
 
   const handleMouseDown = (e: any) => {
@@ -27,10 +29,14 @@ const Text: React.FC<TextProps> = function ({ element }) {
   };
 
   const handleBlur = (e: any) => {
+    console.log(e.target);
+    console.log(textRef.current);
     if (e.target !== textRef.current) {
-      element.propValue = e.target.innerHTML || "&nbsp;";
+      console.log(123);
+      setComponentContent(textRef.current.innerHTML || "&nbsp;");
       setCanEdit(false);
     }
+    console.log(456);
   };
 
   useEffect(() => {
@@ -39,6 +45,14 @@ const Text: React.FC<TextProps> = function ({ element }) {
       clearSelectText();
     }
   }, [curComponent]);
+
+  useEffect(() => {
+    if (canEdit) {
+      window.addEventListener("click", handleBlur, false);
+    } else {
+      window.removeEventListener("click", handleBlur);
+    }
+  }, [canEdit]);
 
   const selectText = (element: Node) => {
     const selection = window.getSelection();
@@ -68,8 +82,6 @@ const Text: React.FC<TextProps> = function ({ element }) {
             contentEditable={canEdit}
             onDoubleClick={setEdit}
             onMouseDown={handleMouseDown}
-            onClick={handleBlur}
-            onBlur={handleBlur}
             dangerouslySetInnerHTML={{ __html: element.propValue }}
           ></div>
         </div>

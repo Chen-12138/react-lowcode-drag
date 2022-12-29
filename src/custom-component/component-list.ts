@@ -138,6 +138,17 @@ const list: ComponentListItem[] = [
       height: 200,
     },
   },
+  {
+    component: "Music",
+    label: "音乐",
+    propValue:
+      "https://other-web-ra01-sycdn.kuwo.cn/5c650cd4d3b798405ed9bfab4ae1fe18/63941698/resource/n3/320/31/1/1060334909.mp3",
+    icon: "tupian",
+    style: {
+      width: 200,
+      height: 200,
+    },
+  },
 ];
 
 for (let i = 0, len = list.length; i < len; i++) {

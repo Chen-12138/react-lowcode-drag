@@ -1,10 +1,30 @@
+import useAction from "@/hook/useAction";
+import { State } from "@/state/reducer";
+import { Input, Form } from "antd";
+import { useSelector } from "react-redux";
 import CommonAttr from "../common/CommonAttr";
 
 const CircleAttr = () => {
+  const { curComponent } = useSelector((state: State) => state.editor);
+  const { setComponentContent } = useAction();
+
   return (
     <div>
       <h3>CircleAttr</h3>
       <CommonAttr />
+      <Form
+        layout="vertical"
+        initialValues={{ content: curComponent?.propValue }}
+        onValuesChange={(val) => {
+          if (curComponent) {
+            setComponentContent(val.content);
+          }
+        }}
+      >
+        <Form.Item name="content" label="内容">
+          <Input placeholder="请输入文案" autoComplete="off" />
+        </Form.Item>
+      </Form>
     </div>
   );
 };

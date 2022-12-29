@@ -19,6 +19,8 @@ export enum ActionTypes {
   SetComponentData = "SetComponentData",
   // 设置组件样式
   SetComponentStyle = "SetComponentStyle",
+  // 设置组件内容
+  SetComponentContent = "SetComponentContent",
   // 删除组件
   DeleteComponent = "DeleteComponent",
   // 上移组件

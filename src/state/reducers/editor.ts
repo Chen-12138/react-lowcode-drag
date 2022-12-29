@@ -177,6 +177,19 @@ const editorReducer = (
       };
     }
 
+    case ActionTypes.SetComponentContent: {
+      const curComponent = state.curComponent;
+      const content = action.payload as string;
+      if (curComponent) {
+        curComponent.propValue = content;
+      }
+
+      return {
+        ...state,
+        curComponent,
+      };
+    }
+
     case ActionTypes.DeleteComponent: {
       const index = action.payload as number;
       if (index === undefined) {
