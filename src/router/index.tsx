@@ -3,6 +3,7 @@ import Login from "../views/Login";
 import Editor from "../views/Editor";
 import Home from "../views/Home";
 import MyWork from "@/views/Home/MyWork";
+import View from "@/views/View";
 
 const route = [
   {
@@ -38,6 +39,10 @@ const route = [
   {
     path: "/editor",
     element: <Editor />,
+  },
+  {
+    path: "/view",
+    element: <View />,
   },
 ];
 

@@ -7,22 +7,23 @@ import { Avatar, Button, Dropdown } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserInfoModal from "../UserInfoModal";
+import useUser from "@/hook/useUser";
+import { useSelector } from "react-redux";
+import { State } from "@/state/reducer";
 
 const UserBtn = () => {
-  const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(!!localStorage.getItem("user"));
-  const [user, setUser] = useState<any>();
+  const { userInfo } = useSelector((state: State) => state.user);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const { checkLoginState, doLogOut, goLogin } = useUser();
 
   const handleLoginOut = () => {
-    localStorage.removeItem("user");
-    navigate("/login");
+    doLogOut();
   };
 
   useEffect(() => {
-    const userInfo = {};
-    setUser(userInfo);
-  }, []);
+    setIsLogin(checkLoginState());
+  }, [userInfo]);
 
   const items = [
     {
@@ -56,14 +57,16 @@ const UserBtn = () => {
       {isLogin ? (
         <Dropdown menu={{ items }}>
           <div style={{ whiteSpace: "nowrap" }}>
-            <Avatar icon={<UserOutlined />} /> {user?.username}
+            <Avatar icon={<UserOutlined />} /> {userInfo?.username}
           </div>
         </Dropdown>
       ) : (
-        <Button type="link">登录</Button>
+        <Button type="link" onClick={goLogin}>
+          登录
+        </Button>
       )}
       <UserInfoModal
-        userInfo={user}
+        userInfo={userInfo}
         open={showUserModal}
         onCancel={() => setShowUserModal(false)}
       />

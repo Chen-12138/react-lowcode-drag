@@ -11,3 +11,12 @@ export interface Project {
   // 更新时间
   update_time: number;
 }
+
+// 请求的类型定义
+
+export type Result<T> = {
+  status: boolean;
+  code: number;
+  msg: string;
+  result: T;
+};

@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.0.6",
     "animate.css": "^4.1.1",
     "antd": "^4.24.1",
+    "axios": "^1.2.2",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
@@ -155,6 +156,7 @@
     ]
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/lodash": "^4.14.188",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.9",
