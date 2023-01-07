@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import routes from "./router";
+import routes, { RouterAuth } from "./router";
 import { useEffect } from "react";
 import useUserAction from "./hook/useUserAction";
 
@@ -11,7 +11,7 @@ function App() {
     updateUserFromLocal();
   }, []);
 
-  return <>{route}</>;
+  return <RouterAuth>{route}</RouterAuth>;
 }
 
 export default App;

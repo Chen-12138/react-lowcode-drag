@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import { message, Form, Button, Input } from "antd";
+import { useState } from "react";
+import { Form, Button, Input } from "antd";
 import styles from "./index.less";
-import { useNavigate } from "react-router-dom";
-import { LoginParam, RegisterParam, login, register } from "@/api";
+import { LoginParam, RegisterParam } from "@/api";
 import useUser from "@/hook/useUser";
 
-const Login = (props: {
-  history?: { push: (arg0: string) => void; replace: (arg0: string) => void };
-}) => {
+const Login = () => {
   const { doLogin, doRegister } = useUser();
   const [type, setType] = useState<"login" | "register">("login");
   const [form] = Form.useForm();
-  const navigate = useNavigate();
 
   const handleChangeType = () => {
     if (type === "login") {
@@ -36,12 +32,6 @@ const Login = (props: {
 
   const handleRegister = async (values: RegisterParam) => {
     await doRegister(values);
-  };
-
-  const linkToHome = () => {
-    navigate("/home/my-work", {
-      replace: false,
-    });
   };
 
   return (
