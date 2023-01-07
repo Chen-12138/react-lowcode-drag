@@ -1,26 +1,42 @@
-import { Navigate } from "react-router-dom";
-import Login from "../views/Login";
-import Editor from "../views/Editor";
-import Home from "../views/Home";
-import MyWork from "@/views/Home/MyWork";
-import View from "@/views/View";
+import { Navigate, RouteObject } from "react-router-dom";
+import React, { Suspense } from "react";
+import { Spin } from "antd";
 
-const route = [
+const lazyLoad = (Comp: React.LazyExoticComponent<any>) => {
+  return (
+    <Suspense
+      fallback={
+        <Spin
+          size="large"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        />
+      }
+    >
+      <Comp />
+    </Suspense>
+  );
+};
+
+const route: RouteObject[] = [
   {
     path: "/",
     element: <Navigate to="/home/my-work" />,
   },
   {
     path: "/login",
-    element: <Login />,
+    element: lazyLoad(React.lazy(() => import("@/views/Login"))),
   },
   {
     path: "/home",
-    element: <Home />,
+    element: lazyLoad(React.lazy(() => import("@/views/Home"))),
     children: [
       {
         path: "my-work",
-        element: <MyWork />,
+        element: lazyLoad(React.lazy(() => import("@/views/Home/MyWork"))),
       },
       {
         path: "my-template",
@@ -38,11 +54,11 @@ const route = [
   },
   {
     path: "/editor",
-    element: <Editor />,
+    element: lazyLoad(React.lazy(() => import("@/views/Editor"))),
   },
   {
     path: "/view",
-    element: <View />,
+    element: lazyLoad(React.lazy(() => import("@/views/View"))),
   },
 ];
 
