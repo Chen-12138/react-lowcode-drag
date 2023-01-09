@@ -20,6 +20,11 @@ import EventList from "@/components/EventList";
 import "animate.css";
 import useKeyBoard from "@/hook/useKeyboard";
 import Header from "@/components/Header";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getPageDetail } from "@/api";
+import { ProjectConfig } from "./config";
+import PageList from "./pageList";
 
 function App() {
   const { editor, isClickComponent, curComponent } = useSelector(
@@ -31,9 +36,22 @@ function App() {
     setCurComponent,
     setClickComponentStatus,
   } = useAction();
-
   // 监听键盘事件
   useKeyBoard();
+  const { id } = useParams();
+  const [pageData, setPageData] = useState<ProjectConfig>();
+
+  useEffect(() => {
+    async function getDetail() {
+      try {
+        const res = await getPageDetail(id || "");
+        setPageData(res.result);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    getDetail();
+  }, []);
 
   const handleDrop = (e: any) => {
     e.preventDefault();
@@ -99,10 +117,30 @@ function App() {
       </Header>
 
       <main>
-        {/* 左侧组件列表 */}
+        {/* 左侧列表 */}
         <section className={styles.left}>
-          <ComponentList />
-          <RealTimeComponentList />
+          <Tabs
+            style={{ height: "100%" }}
+            tabPosition="left"
+            defaultActiveKey="componentList"
+            items={[
+              {
+                label: `组件列表`,
+                key: "componentList",
+                children: (
+                  <div>
+                    <ComponentList />
+                    <RealTimeComponentList />
+                  </div>
+                ),
+              },
+              {
+                label: `页面`,
+                key: "page",
+                children: <PageList pageConfig={pageData?.pages} />,
+              },
+            ]}
+          />
         </section>
         {/* 中间画布 */}
         <section className={styles.center}>

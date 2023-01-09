@@ -30,10 +30,6 @@ const menuItems: MenuProps["items"] = [
 ];
 
 const Home: React.FC = () => {
-  const location = useLocation();
-
-  console.log(location);
-
   return (
     <Layout style={{ height: "100vh" }}>
       <Header />

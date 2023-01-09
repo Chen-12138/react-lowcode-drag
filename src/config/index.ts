@@ -15,7 +15,19 @@ const currentConfigKey: string = process.env.NODE_ENV;
 const isDev = process.env.NODE_ENV === "development";
 const isTest = process.env.NODE_ENV === "development";
 
-const configObj = {
+interface Config {
+  isDevelop: string;
+  canvasH5Width: number;
+  canvasH5Height: number;
+  pageModeList: {
+    value: string;
+    label: string;
+    disable: boolean;
+  }[];
+  [x: string]: any;
+}
+
+const configObj: Config = {
   isDevelop: isDev || isTest,
   ...configDict[currentConfigKey],
   // h5模式宽高

@@ -72,7 +72,7 @@ const routes: RouteProps[] = [
     ],
   },
   {
-    path: "/editor",
+    path: "/editor/:id",
     element: lazyLoad(React.lazy(() => import("@/views/Editor"))),
   },
   {

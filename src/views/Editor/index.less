@@ -9,7 +9,7 @@
     .left {
       position: absolute;
       height: 100%;
-      width: 200px;
+      width: 320px;
       left: 0;
       top: 0;
 
@@ -19,6 +19,31 @@
         &:first-child {
           border-bottom: 1px solid #ddd;
         }
+      }
+
+      :global(.ant-tabs-content) {
+        height: 100%;
+      }
+
+      :global(.ant-tabs-tabpane) {
+        height: 100%;
+
+        & > div {
+          height: 100%;
+        }
+      }
+
+      :global(.ant-tabs-nav-list) {
+        padding-top: 10px;
+      }
+
+      :global(
+          .ant-tabs-left
+            > .ant-tabs-content-holder
+            > .ant-tabs-content
+            > .ant-tabs-tabpane
+        ) {
+        padding-left: 10px;
       }
     }
 
@@ -48,12 +73,12 @@
     }
 
     .center {
-      margin-left: 200px;
+      margin-left: 320px;
       margin-right: 288px;
       background: #f5f5f5;
       height: 100%;
       overflow: auto;
-      padding: 20px;
+      padding: 16px;
 
       .content {
         width: 100%;

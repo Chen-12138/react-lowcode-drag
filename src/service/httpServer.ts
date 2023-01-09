@@ -2,6 +2,7 @@ import axios, { AxiosHeaders } from "axios";
 import type { AxiosResponse, AxiosRequestConfig } from "axios";
 import $config from "@/config/index";
 import QS from "qs";
+import store from "@/state/store";
 import { Result } from "./type";
 
 // 线上环境配置axios.defaults.baseURL，生产环境则用proxy代理
@@ -15,6 +16,7 @@ axios.defaults.timeout = 30000; // 超时时间
 //请求拦截器
 axios.interceptors.request.use(
   (config: any) => {
+    config.headers.Authorization = store.getState().user.access_token;
     return config;
   },
   (error) => {

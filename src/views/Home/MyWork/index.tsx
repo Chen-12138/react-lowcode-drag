@@ -1,7 +1,24 @@
+import { getMyPages } from "@/api";
 import WorkCard from "@/components/WorkCard";
 import { Project } from "@/service/type";
+import { ProjectConfig } from "@/views/Editor/config";
+import { useEffect, useState } from "react";
 
 const MyWork = () => {
+  const [projectList, setProjectList] = useState<ProjectConfig[]>([]);
+  const [searchParams, setSearchParams] = useState({
+    type: "my",
+    pageMode: "h5",
+  });
+
+  useEffect(() => {
+    async function getList() {
+      const res = await getMyPages(searchParams);
+      setProjectList(res.result.projects);
+    }
+    getList();
+  }, []);
+
   const mockConfig: Project = {
     id: String(Math.random()),
     title: "未命名",
@@ -13,8 +30,9 @@ const MyWork = () => {
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
-      {new Array(9).fill(mockConfig).map((item) => {
-        return <WorkCard config={item} key={item.id}></WorkCard>;
+      <WorkCard />
+      {projectList.map((item) => {
+        return <WorkCard config={item} key={item._id}></WorkCard>;
       })}
     </div>
   );

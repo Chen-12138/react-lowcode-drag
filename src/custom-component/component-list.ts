@@ -41,6 +41,7 @@ export interface ComponentListItem {
     // verticalAlign: string;
     // color: string;
   };
+  animations?: any;
   events?: any;
   [x: string]: any;
 }
