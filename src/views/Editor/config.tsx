@@ -32,6 +32,7 @@ const projectConfig: ProjectConfig = {
 
 // 页面配置信息字段
 export interface PageConfig {
+  uuid?: string;
   name: string;
   element: ComponentListItem[];
   config: any;
@@ -43,7 +44,7 @@ const pageConfig: PageConfig = {
   config: {},
 };
 
-export const getProjectConfig: () => ProjectConfig = function () {
+export const getProjectConfig: () => ProjectConfig = () => {
   let project = cloneDeep(projectConfig);
   let onePage = getPageConfig();
   project.pages.push({
@@ -52,9 +53,18 @@ export const getProjectConfig: () => ProjectConfig = function () {
   return project;
 };
 
-export const getPageConfig: () => PageConfig = function () {
+export const getPageConfig: () => PageConfig = () => {
   return {
     uuid: createUUID(),
     ...cloneDeep(pageConfig),
   };
+};
+
+export const copyPage = (data?: PageConfig) => {
+  if (data) {
+    const pageData = cloneDeep(data);
+    pageData.uuid = createUUID();
+    return pageData;
+  }
+  return getPageConfig();
 };

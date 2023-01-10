@@ -12,6 +12,7 @@ import {
   EditAnimationPayload,
   SetCurComponentPayload,
 } from "../constants/actionTypes";
+import { ProjectConfig, copyPage, getPageConfig } from "@/views/Editor/config";
 
 export interface CanvasStyleData {
   width: number;
@@ -43,6 +44,11 @@ export interface EditorState {
   curComponentIndex: number;
   // 点击画布时是否点中组件，主要用于取消选中组件用。
   isClickComponent: boolean;
+
+  // 当前编辑器编辑工程项目数据
+  projectData: ProjectConfig;
+  // 当前正在编辑页面的uuid
+  currentPageUUID: string;
 
   // 右键菜单信息
   menuTop: number;
@@ -78,6 +84,11 @@ export const editorInitialState: EditorState = {
   curComponentIndex: -1,
   isClickComponent: false,
 
+  // 当前编辑器编辑工程项目数据
+  projectData: {} as ProjectConfig,
+  // 当前正在编辑页面的uuid
+  currentPageUUID: "",
+
   menuTop: 0,
   menuLeft: 0,
   menuShow: false,
@@ -94,6 +105,83 @@ const editorReducer = (
   action: Action
 ) => {
   switch (action.type) {
+    case ActionTypes.SetProjectData: {
+      const projectData = action.payload as ProjectConfig;
+      if (!state.currentPageUUID) {
+        state.currentPageUUID = projectData.pages[0].uuid || "";
+      }
+      return {
+        ...state,
+        projectData,
+      };
+    }
+
+    case ActionTypes.SetCurrentPageUUID: {
+      return {
+        ...state,
+        currentPageUUID: action.payload,
+      };
+    }
+
+    case ActionTypes.AddPage: {
+      const uuid = action.payload;
+      const data = getPageConfig();
+      let index = -1;
+      if (uuid) {
+        index = state.projectData.pages.findIndex((page) => page.uuid === uuid);
+      } else {
+        index = state.projectData.pages.length - 1;
+      }
+      state.projectData.pages.splice(index, 0, data);
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.DeletePage: {
+      const uuid = action.payload;
+      const data = getPageConfig();
+      // 如果删除的为最后一页
+      if (
+        state.projectData.pages.length === 1 &&
+        state.currentPageUUID === uuid
+      ) {
+        console.log("last");
+        state.projectData.pages.push(data);
+        state.currentPageUUID = data.uuid || "";
+        state.projectData.pages.splice(0, 1);
+      }
+      const index = state.projectData.pages.findIndex(
+        (page) => page.uuid === uuid
+      );
+      console.log(index);
+      state.currentPageUUID =
+        state.projectData.pages[index + 1]?.uuid ||
+        state.projectData.pages[index - 1]?.uuid ||
+        "";
+      console.log(state.currentPageUUID);
+      state.projectData.pages.splice(index, 1);
+      return {
+        ...state,
+      };
+    }
+
+    case ActionTypes.CopyPage: {
+      const uuid = action.payload;
+      let pageData = state.projectData.pages.find((page) => page.uuid === uuid);
+      let data = copyPage(pageData);
+      let index = -1;
+      if (uuid) {
+        index = state.projectData.pages.findIndex((page) => page.uuid === uuid);
+      } else {
+        index = state.projectData.pages.length - 1;
+      }
+      state.projectData.pages.splice(index, 0, data);
+      return {
+        ...state,
+      };
+    }
+
     case ActionTypes.SetEditor: {
       return {
         ...state,

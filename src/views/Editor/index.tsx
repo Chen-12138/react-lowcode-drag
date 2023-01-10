@@ -23,14 +23,14 @@ import Header from "@/components/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPageDetail } from "@/api";
-import { ProjectConfig } from "./config";
 import PageList from "./pageList";
 
 function App() {
-  const { editor, isClickComponent, curComponent } = useSelector(
+  const { projectData, editor, isClickComponent, curComponent } = useSelector(
     (state: State) => state.editor
   );
   const {
+    setProjectData,
     addComponent,
     recordSnapshot,
     setCurComponent,
@@ -39,13 +39,12 @@ function App() {
   // 监听键盘事件
   useKeyBoard();
   const { id } = useParams();
-  const [pageData, setPageData] = useState<ProjectConfig>();
 
   useEffect(() => {
     async function getDetail() {
       try {
         const res = await getPageDetail(id || "");
-        setPageData(res.result);
+        setProjectData(res.result);
       } catch (e) {
         console.log(e);
       }
@@ -137,7 +136,7 @@ function App() {
               {
                 label: `页面`,
                 key: "page",
-                children: <PageList pageConfig={pageData?.pages} />,
+                children: <PageList pageConfig={projectData?.pages} />,
               },
             ]}
           />

@@ -1,0 +1,41 @@
+.pageList {
+  text-align: center;
+  position: relative;
+}
+.addBtn {
+  position: absolute;
+  left: 50%;
+  translate: (-50%);
+  bottom: 32px;
+}
+
+.pageItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
+  cursor: pointer;
+  padding: 0 16px;
+  .pageItemIndex {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #ccc;
+    color: #fff;
+    margin-right: 8px;
+  }
+
+  &.active {
+    background-color: #eee;
+    color: #111;
+    .pageItemIndex {
+      background: #4a90e2;
+      color: white;
+    }
+  }
+}

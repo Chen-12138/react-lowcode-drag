@@ -6,6 +6,7 @@ import {
   ContextMenuInfo,
   SetCurComponentPayload,
 } from "../state/constants/actionTypes";
+import { ProjectConfig } from "@/views/Editor/config";
 
 /**
  * 将dispath action 写成一个hook吧，dispath代码太多了，而且不好看
@@ -14,6 +15,41 @@ export default function useAction() {
   const dispatch = useDispatch();
 
   return {
+    setProjectData(project: ProjectConfig) {
+      dispatch({
+        type: ActionTypes.SetProjectData,
+        payload: project,
+      });
+    },
+
+    setCurrentPageUUID(uuid?: string) {
+      dispatch({
+        type: ActionTypes.SetCurrentPageUUID,
+        payload: uuid,
+      });
+    },
+
+    addPage(uuid?: string) {
+      dispatch({
+        type: ActionTypes.AddPage,
+        payload: uuid,
+      });
+    },
+
+    deletePage(uuid?: string) {
+      dispatch({
+        type: ActionTypes.DeletePage,
+        payload: uuid,
+      });
+    },
+
+    copyPage(uuid?: string) {
+      dispatch({
+        type: ActionTypes.CopyPage,
+        payload: uuid,
+      });
+    },
+
     setEditor(editor: any) {
       dispatch({
         type: ActionTypes.SetEditor,

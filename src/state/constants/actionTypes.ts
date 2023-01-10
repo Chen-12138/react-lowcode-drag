@@ -1,8 +1,21 @@
 import { ComponentListItem } from "@/custom-component/component-list";
 import { AnimationItem } from "@/utils/animationClassData";
 import { CanvasStyleData } from "../reducers/editor";
+import { ProjectConfig, PageConfig } from "@/views/Editor/config";
 
 export enum ActionTypes {
+  // 设置编辑项目数据
+  SetProjectData = "SetProjectData",
+  // 设置当前选中页面uuid
+  SetCurrentPageUUID = "SetCurrentPageUUID",
+
+  // 添加页面
+  AddPage = "AddPage",
+  // 删除页面
+  DeletePage = "DeletePage",
+  // 复制页面
+  CopyPage = "CopyPage",
+
   // 设置Editor
   SetEditor = "SetEditor",
   // 设置画布属性
@@ -88,6 +101,8 @@ export interface AddEventPayload {
 export interface Action {
   type: ActionTypes;
   payload:
+    | ProjectConfig
+    | PageConfig
     | CanvasStyleData
     | ComponentListItem
     | SetCurComponentPayload
