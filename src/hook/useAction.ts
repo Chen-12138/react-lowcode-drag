@@ -6,7 +6,9 @@ import {
   ContextMenuInfo,
   SetCurComponentPayload,
 } from "../state/constants/actionTypes";
-import { ProjectConfig } from "@/views/Editor/config";
+import { PageConfig, ProjectConfig } from "@/views/Editor/config";
+import store from "@/state/store";
+import { EditorState } from "@/state/reducers/editor";
 
 /**
  * 将dispath action 写成一个hook吧，dispath代码太多了，而且不好看
@@ -219,3 +221,12 @@ export default function useAction() {
     },
   };
 }
+
+export const getCurrentPage = () => {
+  const { projectData, currentPageUUID } = store.getState()
+    .editor as EditorState;
+  return (
+    projectData?.pages?.find((page) => page.uuid === currentPageUUID) ||
+    ({} as PageConfig)
+  );
+};

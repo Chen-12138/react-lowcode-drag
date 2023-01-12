@@ -4,7 +4,7 @@ import ComponentList from "@/components/ComponentList";
 import RealTimeComponentList from "@/components/RealTimeComponentList";
 import { Tabs } from "antd";
 import CanvasAttr from "@/components/CanvasAttr";
-import Editor from "@/components/Editor";
+import EditorPlane from "@/components/Editor";
 import { State } from "@/state/reducer";
 import { useSelector } from "react-redux";
 import { cloneDeep } from "lodash";
@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 import { getPageDetail } from "@/api";
 import PageList from "./pageList";
 
-function App() {
+function Editor() {
   const { projectData, editor, isClickComponent, curComponent } = useSelector(
     (state: State) => state.editor
   );
@@ -150,7 +150,7 @@ function App() {
             onMouseDown={handleMouseDown}
             onClick={deSelectCurComponent}
           >
-            <Editor />
+            <EditorPlane />
           </div>
         </section>
         {/* 右侧属性列表 */}
@@ -189,4 +189,4 @@ function App() {
   );
 }
 
-export default App;
+export default Editor;

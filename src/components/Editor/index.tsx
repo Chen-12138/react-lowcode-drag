@@ -8,7 +8,7 @@ import Text from "@/custom-component/Text";
 import styles from "./index.less";
 import { ComponentListItem } from "@/custom-component/component-list";
 import { getComponentWrapStyle, getStyle } from "@/utils/style";
-import useAction from "@/hook/useAction";
+import useAction, { getCurrentPage } from "@/hook/useAction";
 import Button from "@/custom-component/Button";
 import Rect from "@/custom-component/Rect";
 import Circle from "@/custom-component/Circle";
@@ -23,9 +23,12 @@ interface AreaStyle {
   height: number;
 }
 
-const Editor = function () {
-  const { canvasStyleData, componentData, curComponent, menuShow } =
-    useSelector((state: State) => state.editor);
+const EditorPlane = function () {
+  const currentPage = getCurrentPage();
+  const { projectData, componentData, curComponent, menuShow } = useSelector(
+    (state: State) => state.editor
+  );
+  const { canvasStyleData } = projectData;
   const { setEditor, showContextMenu, hideContextMenu } = useAction();
   const editorRef = useRef<HTMLDivElement>({} as HTMLDivElement);
   const [isShowArea, setIsShowArea] = useState(false);
@@ -165,14 +168,14 @@ const Editor = function () {
       onClick={handleClick}
       style={{
         ...canvasStyleData,
-        width: canvasStyleData.width + "px",
-        height: canvasStyleData.height + "px",
+        width: canvasStyleData?.width + "px",
+        height: canvasStyleData?.height + "px",
       }}
     >
       {/* 网格 */}
       <Grid />
 
-      {componentData.map((item, index) => {
+      {currentPage?.componentData?.map((item, index) => {
         return (
           <ComponentWrap
             key={item.id}
@@ -196,4 +199,4 @@ const Editor = function () {
   );
 };
 
-export default Editor;
+export default EditorPlane;

@@ -4,8 +4,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Dropdown } from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import UserInfoModal from "../UserInfoModal";
 import useUser from "@/hook/useUser";
 import { useSelector } from "react-redux";
@@ -14,16 +13,11 @@ import { State } from "@/state/reducer";
 const UserBtn = () => {
   const { userInfo } = useSelector((state: State) => state.user);
   const [showUserModal, setShowUserModal] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const { checkLoginState, doLogOut, goLogin } = useUser();
+  const { isLogin, doLogOut, goLogin } = useUser();
 
   const handleLoginOut = () => {
     doLogOut();
   };
-
-  useEffect(() => {
-    setIsLogin(checkLoginState());
-  }, [userInfo]);
 
   const items = [
     {

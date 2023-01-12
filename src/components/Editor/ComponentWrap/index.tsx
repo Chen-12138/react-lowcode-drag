@@ -176,9 +176,11 @@ const ComponentWrap: React.FC<ComponentWrapProps> = ({
   }, [curComponent, curComponent?.style.rotate]);
 
   useEffect(() => {
-    element.events["animation"] = () => {
-      runAnimation(ref.current, element.animations);
-    };
+    if (element?.events) {
+      element.events["animation"] = () => {
+        runAnimation(ref.current, element.animations);
+      };
+    }
   }, []);
 
   return (

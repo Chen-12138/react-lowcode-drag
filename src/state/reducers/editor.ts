@@ -1,5 +1,5 @@
 import { message } from "antd";
-import { cloneDeep } from "lodash";
+import { cloneDeep, find } from "lodash";
 import { CSSProperties } from "react";
 import { ComponentListItem } from "@/custom-component/component-list";
 import { copyData, restorePreCutData } from "../utils/copy";
@@ -12,7 +12,12 @@ import {
   EditAnimationPayload,
   SetCurComponentPayload,
 } from "../constants/actionTypes";
-import { ProjectConfig, copyPage, getPageConfig } from "@/views/Editor/config";
+import {
+  PageConfig,
+  ProjectConfig,
+  copyPage,
+  getPageConfig,
+} from "@/views/Editor/config";
 
 export interface CanvasStyleData {
   width: number;
@@ -100,26 +105,41 @@ export const editorInitialState: EditorState = {
   isCut: false,
 };
 
+const findCurrentPage = (state: EditorState) => {
+  return (
+    state.projectData?.pages?.find(
+      (page) => page.uuid === state.currentPageUUID
+    ) || ({} as PageConfig)
+  );
+};
+
+const desecletComponent = (state: EditorState) => {
+  state.curComponent = null;
+  state.curComponentIndex = -1;
+};
+
 const editorReducer = (
   state: EditorState = editorInitialState,
   action: Action
-) => {
+): EditorState | undefined => {
   switch (action.type) {
     case ActionTypes.SetProjectData: {
       const projectData = action.payload as ProjectConfig;
       if (!state.currentPageUUID) {
         state.currentPageUUID = projectData.pages[0].uuid || "";
+        state.componentData = findCurrentPage(state)?.componentData || [];
       }
       return {
         ...state,
         projectData,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.SetCurrentPageUUID: {
+      state.currentPageUUID = action.payload as string;
+      state.componentData = findCurrentPage(state).componentData;
       return {
         ...state,
-        currentPageUUID: action.payload,
       };
     }
 
@@ -132,7 +152,13 @@ const editorReducer = (
       } else {
         index = state.projectData.pages.length - 1;
       }
-      state.projectData.pages.splice(index, 0, data);
+      if (index === 0) {
+        state.projectData.pages.push(data);
+      } else {
+        state.projectData.pages.splice(index, 0, data);
+      }
+      state.currentPageUUID = state.projectData.pages[index + 1].uuid || "";
+      desecletComponent(state);
       return {
         ...state,
       };
@@ -146,7 +172,6 @@ const editorReducer = (
         state.projectData.pages.length === 1 &&
         state.currentPageUUID === uuid
       ) {
-        console.log("last");
         state.projectData.pages.push(data);
         state.currentPageUUID = data.uuid || "";
         state.projectData.pages.splice(0, 1);
@@ -154,13 +179,12 @@ const editorReducer = (
       const index = state.projectData.pages.findIndex(
         (page) => page.uuid === uuid
       );
-      console.log(index);
       state.currentPageUUID =
         state.projectData.pages[index + 1]?.uuid ||
         state.projectData.pages[index - 1]?.uuid ||
         "";
-      console.log(state.currentPageUUID);
       state.projectData.pages.splice(index, 1);
+      desecletComponent(state);
       return {
         ...state,
       };
@@ -177,6 +201,7 @@ const editorReducer = (
         index = state.projectData.pages.length - 1;
       }
       state.projectData.pages.splice(index, 0, data);
+      desecletComponent(state);
       return {
         ...state,
       };
@@ -186,23 +211,24 @@ const editorReducer = (
       return {
         ...state,
         editor: action.payload,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.SetCanvasStyleData: {
       const payload = action.payload as CanvasStyleData;
+      state.projectData.canvasStyleData = {
+        ...state.projectData.canvasStyleData,
+        ...payload,
+      };
       return {
         ...state,
-        canvasStyleData: {
-          ...state.canvasStyleData,
-          ...payload,
-        },
       };
     }
 
     case ActionTypes.AddComponent: {
+      let page = findCurrentPage(state);
       const component = action.payload as ComponentListItem;
-      state.componentData.push(component);
+      page?.componentData?.push(component);
       return {
         ...state,
       };
@@ -211,10 +237,10 @@ const editorReducer = (
     case ActionTypes.SetCurComponent: {
       const { curComponent, curComponentIndex } =
         action.payload as SetCurComponentPayload;
+      state.curComponent = curComponent;
+      state.curComponentIndex = curComponentIndex ?? -1;
       return {
         ...state,
-        curComponent,
-        curComponentIndex,
       };
     }
 
@@ -232,7 +258,7 @@ const editorReducer = (
       return {
         ...state,
         curComponent,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.SetClickComponentStatus: {
@@ -240,14 +266,15 @@ const editorReducer = (
       return {
         ...state,
         isClickComponent: status,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.SetComponentData: {
       const componentData = action.payload as ComponentListItem[];
+      const page = findCurrentPage(state);
+      page.componentData = componentData;
       return {
         ...state,
-        componentData: componentData,
       };
     }
 
@@ -262,7 +289,7 @@ const editorReducer = (
       return {
         ...state,
         curComponent,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.SetComponentContent: {
@@ -275,15 +302,16 @@ const editorReducer = (
       return {
         ...state,
         curComponent,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.DeleteComponent: {
       const index = action.payload as number;
+      const page = findCurrentPage(state);
       if (index === undefined) {
-        state.componentData.splice(state.curComponentIndex, 1);
+        page.componentData.splice(state.curComponentIndex, 1);
       } else {
-        state.componentData.splice(index, 1);
+        page.componentData.splice(index, 1);
       }
       return {
         ...state,
@@ -291,7 +319,8 @@ const editorReducer = (
     }
 
     case ActionTypes.UpComponent: {
-      const { componentData, curComponentIndex } = state;
+      const { componentData } = findCurrentPage(state);
+      const { curComponentIndex } = state;
       // 上移图层 index，表示元素在数组中越往后
       if (curComponentIndex < componentData.length - 1) {
         swap(componentData, curComponentIndex, curComponentIndex + 1);
@@ -305,7 +334,8 @@ const editorReducer = (
     }
 
     case ActionTypes.DownComponent: {
-      const { componentData, curComponentIndex } = state;
+      const { componentData } = findCurrentPage(state);
+      const { curComponentIndex } = state;
       if (curComponentIndex > 0) {
         swap(componentData, curComponentIndex - 1, curComponentIndex);
         state.curComponentIndex = curComponentIndex - 1;
@@ -318,10 +348,12 @@ const editorReducer = (
     }
 
     case ActionTypes.TopComponent: {
-      if (state.curComponentIndex < state.componentData.length - 1) {
-        state.componentData.splice(state.curComponentIndex, 1);
-        state.componentData.push(state.curComponent!);
-        state.curComponentIndex = state.componentData.length - 1;
+      const { componentData } = findCurrentPage(state);
+
+      if (state.curComponentIndex < componentData.length - 1) {
+        componentData.splice(state.curComponentIndex, 1);
+        componentData.push(state.curComponent!);
+        state.curComponentIndex = componentData.length - 1;
       } else {
         message.info("已经到顶了");
       }
@@ -331,9 +363,10 @@ const editorReducer = (
     }
 
     case ActionTypes.BottomComponent: {
+      const { componentData } = findCurrentPage(state);
       if (state.curComponentIndex > 0) {
-        state.componentData.splice(state.curComponentIndex, 1);
-        state.componentData.unshift(state.curComponent!);
+        componentData.splice(state.curComponentIndex, 1);
+        componentData.unshift(state.curComponent!);
         state.curComponentIndex = 0;
       } else {
         message.info("已经到底了");
@@ -352,7 +385,7 @@ const editorReducer = (
       return {
         ...state,
         curComponent,
-      };
+      } as EditorState;
     }
 
     case ActionTypes.RecordSnapshot: {
@@ -443,7 +476,7 @@ const editorReducer = (
           data.style.left += 10;
         }
       }
-      state.componentData.push(data);
+      findCurrentPage(state).componentData.push(data);
 
       if (state.isCut) {
         state.copyData = null;
@@ -463,7 +496,7 @@ const editorReducer = (
       restorePreCutData(state);
       copyData(state);
 
-      state.componentData.splice(state.curComponentIndex, 1);
+      findCurrentPage(state).componentData.splice(state.curComponentIndex, 1);
 
       state.isCut = true;
 

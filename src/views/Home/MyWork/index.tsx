@@ -11,11 +11,12 @@ const MyWork = () => {
     pageMode: "h5",
   });
 
+  const getList = async () => {
+    const res = await getMyPages(searchParams);
+    setProjectList(res.result.projects);
+  };
+
   useEffect(() => {
-    async function getList() {
-      const res = await getMyPages(searchParams);
-      setProjectList(res.result.projects);
-    }
     getList();
   }, []);
 
@@ -32,7 +33,9 @@ const MyWork = () => {
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       <WorkCard />
       {projectList.map((item) => {
-        return <WorkCard config={item} key={item._id}></WorkCard>;
+        return (
+          <WorkCard refresh={getList} config={item} key={item._id}></WorkCard>
+        );
       })}
     </div>
   );

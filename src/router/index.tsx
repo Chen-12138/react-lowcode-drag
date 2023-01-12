@@ -82,11 +82,10 @@ const routes: RouteProps[] = [
 ];
 
 export const RouterAuth: React.FC<{ children: any }> = ({ children }) => {
-  const { checkLoginState } = useUser();
+  const { isLogin } = useUser();
   const location = useLocation();
   // 匹配当前层级的路由
   const matches = matchRoutes(routes, location);
-  console.log(matches);
   const isNeedLogin = matches?.some((item) => {
     const route = item.route;
 
@@ -95,7 +94,7 @@ export const RouterAuth: React.FC<{ children: any }> = ({ children }) => {
     return route.meta.auth;
   });
 
-  if (isNeedLogin && !checkLoginState()) {
+  if (isNeedLogin && !isLogin) {
     console.log("需要登录");
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }

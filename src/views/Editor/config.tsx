@@ -2,6 +2,7 @@ import { ComponentListItem } from "@/custom-component/component-list";
 import config from "@/config";
 import { cloneDeep } from "lodash";
 import { createUUID } from "@/utils/utils";
+import { CanvasStyleData } from "@/state/reducers/editor";
 
 // 项目配置信息字段
 export interface ProjectConfig {
@@ -12,6 +13,7 @@ export interface ProjectConfig {
   coverImage: string;
   author: string;
   script: string;
+  canvasStyleData: CanvasStyleData;
   width: number;
   height: number;
   pages: PageConfig[];
@@ -25,6 +27,15 @@ const projectConfig: ProjectConfig = {
   coverImage: "",
   author: "",
   script: "",
+  canvasStyleData: {
+    width: 1280,
+    height: 720,
+    scale: 100,
+    color: "#000000",
+    opacity: 1,
+    backgroundColor: "#4A90E2",
+    fontSize: 14,
+  },
   width: config.canvasH5Width,
   height: config.canvasH5Height,
   pages: [],
@@ -34,13 +45,13 @@ const projectConfig: ProjectConfig = {
 export interface PageConfig {
   uuid?: string;
   name: string;
-  element: ComponentListItem[];
+  componentData: ComponentListItem[];
   config: any;
 }
 
 const pageConfig: PageConfig = {
   name: "",
-  element: [],
+  componentData: [],
   config: {},
 };
 

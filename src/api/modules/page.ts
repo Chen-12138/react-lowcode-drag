@@ -9,7 +9,15 @@ export const getMyPages = (params?: any) =>
 
 // 新增页面
 export const createPage = (params: any) =>
-  $axios.post("/luckyh5/page/create", params);
+  $axios.post("/luckyh5/page/createPage", params);
+
+// 更新页面
+export const updatePage = (params: any) =>
+  $axios.post("/luckyh5/page/updatePage", params);
+
+// 删除页面
+export const deletePage = (params: any) =>
+  $axios.post("/luckyh5/page/deletePage", params);
 
 // 获取页面详情
 export const getPageDetail = (id: string) =>

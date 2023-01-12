@@ -6,9 +6,8 @@ import SketchColor from "../SketchColor";
 import styles from "./index.less";
 
 const CanvasAttr = function () {
-  const canvasStyleData = useSelector(
-    (state: State) => state.editor.canvasStyleData
-  );
+  const { projectData } = useSelector((state: State) => state.editor);
+  const { canvasStyleData } = projectData;
   const dispatch = useDispatch();
 
   const handleChange = (style: string, newStyle: any) => {

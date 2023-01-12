@@ -1,15 +1,15 @@
-import { Button, InputNumber, Space } from "antd";
+import { Button, InputNumber, Space, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import useAction from "@/hook/useAction";
 import { ActionTypes } from "@/state/constants/actionTypes";
 import { State } from "@/state/reducer";
 import styles from "./index.less";
 import html2canvas from "html2canvas";
+import { updatePage } from "@/api";
 
 const Toolbar = function () {
-  const editorConfig = useSelector(
-    (state: State) => state.editor.canvasStyleData
-  );
+  const { projectData } = useSelector((state: State) => state.editor);
+  const { canvasStyleData } = projectData;
 
   const { editor } = useSelector((state: State) => state.editor);
   const dispatch = useDispatch();
@@ -19,9 +19,9 @@ const Toolbar = function () {
     dispatch({
       type: ActionTypes.SetCanvasStyleData,
       payload: {
-        width: type === "width" ? val : editorConfig.width,
-        height: type === "height" ? val : editorConfig.height,
-        scale: type === "scale" ? val : editorConfig.scale,
+        width: type === "width" ? val : canvasStyleData.width,
+        height: type === "height" ? val : canvasStyleData.height,
+        scale: type === "scale" ? val : canvasStyleData.scale,
       },
     });
   };
@@ -30,6 +30,15 @@ const Toolbar = function () {
     html2canvas(editor, { useCORS: true }).then(function (canvas) {
       document.body.appendChild(canvas);
     });
+  };
+
+  const handleSave = async () => {
+    try {
+      await updatePage(projectData);
+      message.success("保存成功");
+    } catch {
+      message.error("保存失败");
+    }
   };
 
   return (
@@ -43,13 +52,13 @@ const Toolbar = function () {
         <span>画布大小</span>
         <InputNumber
           type="text"
-          value={editorConfig.width}
+          value={canvasStyleData?.width}
           onChange={(val) => handleChange("width", val)}
         />
         <span>*</span>
         <InputNumber
           type="text"
-          value={editorConfig.height}
+          value={canvasStyleData?.height}
           onChange={(val) => handleChange("height", val)}
         />
       </div>
@@ -57,11 +66,14 @@ const Toolbar = function () {
         <span>画布比例</span>
         <InputNumber
           type="text"
-          value={editorConfig.scale}
+          value={canvasStyleData?.scale}
           onChange={(val) => handleChange("scale", val)}
         />{" "}
         %
       </div>
+      <Button style={{ marginLeft: 24 }} onClick={handleSave}>
+        保存项目
+      </Button>
     </Space>
   );
 };

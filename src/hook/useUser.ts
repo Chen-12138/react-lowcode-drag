@@ -4,16 +4,27 @@ import { LoginParam, RegisterParam, login, register } from "@/api";
 import useUserAction from "./useUserAction";
 import { useLocation, useNavigate } from "react-router-dom";
 import { message } from "antd";
+import { useEffect, useState } from "react";
 
 const useUser = () => {
-  const { access_token, userInfo } = useSelector((state: State) => state.user);
+  const { user } = useSelector((state: State) => state);
+  const { updateUserFromLocal } = useUserAction();
   const { updateAccessToken, updateUserInfo } = useUserAction();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLogin, setIsLogin] = useState(true);
 
-  const checkLoginState = () => {
-    return !!access_token;
-  };
+  useEffect(() => {
+    updateUserFromLocal();
+  }, []);
+
+  useEffect(() => {
+    if (user.access_token) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, [user]);
 
   const doLogin = async (data: LoginParam) => {
     try {
@@ -61,7 +72,7 @@ const useUser = () => {
   };
 
   return {
-    checkLoginState,
+    isLogin,
     doLogin,
     doRegister,
     doLogOut,

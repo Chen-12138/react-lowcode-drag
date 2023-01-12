@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
-import useAction from "@/hook/useAction";
+import useAction, { getCurrentPage } from "@/hook/useAction";
 import { State } from "@/state/reducer";
 import styles from "./index.less";
 
 const RealTimeComponentList = function () {
-  const { componentData, curComponentIndex } = useSelector(
-    (state: State) => state.editor
-  );
+  const currentPage = getCurrentPage();
+  const { componentData } = currentPage;
+  const { curComponentIndex } = useSelector((state: State) => state.editor);
 
   const {
     setCurComponent,
@@ -55,7 +55,7 @@ const RealTimeComponentList = function () {
 
   return (
     <div className={styles["real-time-component-list"]}>
-      {componentData.map((item, index) => {
+      {componentData?.map((item, index) => {
         return (
           <div
             className={`${styles["real-time-component-item"]} ${

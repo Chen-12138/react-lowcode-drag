@@ -13,7 +13,7 @@ import ComponentWrap from "@/components/Editor/ComponentWrap";
 import { getComponentWrapStyle } from "@/utils/style";
 
 function View() {
-  const { canvasStyleData, componentData, curComponent } = useSelector(
+  const { componentData, curComponent } = useSelector(
     (state: State) => state.editor
   );
 
